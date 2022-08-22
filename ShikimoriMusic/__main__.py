@@ -18,14 +18,14 @@ with open("./etc/foreground.png", "wb") as file:
 async def load_start():
     served_chats = []
     try:
-        chats = await get_active_chats()
+        chats = get_active_chats()
         for chat in chats:
             served_chats.botend(int(chat["chat_id"]))
     except Exception as e:
         LOGGER.info("Error came while clearing db")
     for served_chat in served_chats:
         try:
-            await remove_active_chat(served_chat)
+            remove_active_chat(served_chat)
         except Exception as e:
             LOGGER.info("Error came while clearing db")
             pass

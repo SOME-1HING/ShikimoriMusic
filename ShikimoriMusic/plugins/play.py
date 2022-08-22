@@ -225,7 +225,7 @@ async def play(_, message: Message):
                 await message.reply(
                     f"**@{ASS_USERNAME} joined !**",
                 )
-                await remove_active_chat(chat_id)
+                remove_active_chat(chat_id)
             except Exception as e:
                 await message.reply_text(
                     f"**@{ASS_USERNAME} failed to join** Add @{ASS_USERNAME} manually in your group.\n\n**Reason**:{e}"
@@ -241,7 +241,7 @@ async def play(_, message: Message):
                 await message.reply(
                     f"**@{ASS_USERNAME} joined successfully**",
                 )
-                await remove_active_chat(message.chat.id)
+                remove_active_chat(message.chat.id)
             except UserAlreadyParticipant:
                 pass
             except Exception as e:
@@ -532,7 +532,7 @@ async def play(_, message: Message):
         x = await loop.run_in_executor(None, download, url, my_hook)
         file_path = await cconvert.convert(x)
 
-    if await is_active_chat(message.chat.id):
+    if is_active_chat(message.chat.id):
         position = await queues.put(message.chat.id, file=file_path)
         await message.reply_photo(
             photo="final.png",
@@ -558,8 +558,8 @@ async def play(_, message: Message):
             )
 
 
-        await music_on(message.chat.id)
-        await add_active_chat(message.chat.id)
+        music_on(message.chat.id)
+        add_active_chat(message.chat.id)
         await message.reply_photo(
             photo="final.png",
             reply_markup=keyboard,

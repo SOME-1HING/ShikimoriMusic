@@ -14,7 +14,7 @@ async def on_kicked(client: PyTgCalls, chat_id: int) -> None:
         queues.clear(chat_id)
     except QueueEmpty:
         pass
-    await remove_active_chat(chat_id)
+    remove_active_chat(chat_id)
 
 
 @pytgcalls.on_closed_voice_chat()
@@ -23,7 +23,7 @@ async def on_closed(client: PyTgCalls, chat_id: int) -> None:
         queues.clear(chat_id)
     except QueueEmpty:
         pass
-    await remove_active_chat(chat_id)
+    remove_active_chat(chat_id)
 
 
 @pytgcalls.on_stream_end()
@@ -32,7 +32,7 @@ async def on_stream_end(client: PyTgCalls, update: Update) -> None:
     try:
         queues.task_done(chat_id)
         if queues.is_empty(chat_id):
-            await remove_active_chat(chat_id)
+            remove_active_chat(chat_id)
             await pytgcalls.leave_group_call(chat_id)
         else:
             await pytgcalls.change_stream(

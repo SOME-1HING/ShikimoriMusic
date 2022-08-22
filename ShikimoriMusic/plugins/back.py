@@ -241,9 +241,9 @@ Only admin with manage voice chat permission can do this.
     CallbackQuery.from_user.first_name
     chat_id = CallbackQuery.message.chat.id
     chat_title = CallbackQuery.message.chat.title
-    if await is_active_chat(chat_id):
+    if is_active_chat(chat_id):
             user_id = CallbackQuery.from_user.id
-            await remove_active_chat(chat_id)
+            remove_active_chat(chat_id)
             user_name = CallbackQuery.from_user.first_name
             rpk = "[" + user_name + "](tg://user?id=" + str(user_id) + ")"
             await CallbackQuery.answer()
@@ -270,11 +270,11 @@ async def pausevc(_, CallbackQuery):
         )
     CallbackQuery.from_user.first_name
     chat_id = CallbackQuery.message.chat.id
-    if await is_active_chat(chat_id):
-        if await is_music_playing(chat_id):
-            await music_off(chat_id)
-            await calls.pytgcalls.pause_stream(chat_id)
-            await CallbackQuery.answer("Music Paused Successfully.", show_alert=True)
+    if is_active_chat(chat_id):
+        if is_music_playing(chat_id):
+            music_off(chat_id)
+            calls.pytgcalls.pause_stream(chat_id)
+            CallbackQuery.answer("Music Paused Successfully.", show_alert=True)
             
         else:
             await CallbackQuery.answer(f"Nothing is playing on voice chat!", show_alert=True)
@@ -297,15 +297,15 @@ Only admin with manage voice chat permission can do this.
         )
     CallbackQuery.from_user.first_name
     chat_id = CallbackQuery.message.chat.id
-    if await is_active_chat(chat_id):
-        if await is_music_playing(chat_id):
+    if is_active_chat(chat_id):
+        if is_music_playing(chat_id):
             await CallbackQuery.answer(
                 "Nothing is paused in the voice chat.",
                 show_alert=True,
             )
             return
         else:
-            await music_on(chat_id)
+            music_on(chat_id)
             await calls.pytgcalls.resume_stream(chat_id)
             await CallbackQuery.answer("Music resumed successfully.", show_alert=True)
             
@@ -325,13 +325,13 @@ async def stopvc(_, CallbackQuery):
         )
     CallbackQuery.from_user.first_name
     chat_id = CallbackQuery.message.chat.id
-    if await is_active_chat(chat_id):
+    if is_active_chat(chat_id):
         
         try:
             await calls.pytgcalls.leave_group_call(chat_id)
         except Exception:
             pass
-        await remove_active_chat(chat_id)
+        remove_active_chat(chat_id)
         await CallbackQuery.answer("Music stream ended.", show_alert=True)
         user_id = CallbackQuery.from_user.id
         user_name = CallbackQuery.from_user.first_name
@@ -352,13 +352,13 @@ async def cleandb(_, CallbackQuery):
         )
     CallbackQuery.from_user.first_name
     chat_id = CallbackQuery.message.chat.id
-    if await is_active_chat(chat_id):
+    if is_active_chat(chat_id):
         
         try:
             await calls.pytgcalls.leave_group_call(chat_id)
         except Exception:
             pass
-        await remove_active_chat(chat_id)
+        remove_active_chat(chat_id)
         await CallbackQuery.answer("Db cleaned successfully!", show_alert=True)
         user_id = CallbackQuery.from_user.id
         user_name = CallbackQuery.from_user.first_name
@@ -631,7 +631,7 @@ async def high(_, CallbackQuery):
         )
     CallbackQuery.from_user.first_name
     chat_id = CallbackQuery.message.chat.id
-    if await is_active_chat(chat_id):
+    if is_active_chat(chat_id):
             
         await CallbackQuery.answer("Now streaming in high quality!", show_alert=True)
         await CallbackQuery.edit_message_text(
@@ -654,7 +654,7 @@ async def low(_, CallbackQuery):
         )
     CallbackQuery.from_user.first_name
     chat_id = CallbackQuery.message.chat.id
-    if await is_active_chat(chat_id):
+    if is_active_chat(chat_id):
             
         await CallbackQuery.answer("Now streaming in low quality!", show_alert=True)
         await CallbackQuery.edit_message_text(
@@ -676,7 +676,7 @@ async def medium(_, CallbackQuery):
         )
     CallbackQuery.from_user.first_name
     chat_id = CallbackQuery.message.chat.id
-    if await is_active_chat(chat_id):
+    if is_active_chat(chat_id):
             
         await CallbackQuery.answer("Now streaming in medium quality!", show_alert=True)
         await CallbackQuery.edit_message_text(
@@ -698,7 +698,7 @@ async def fifth(_, CallbackQuery):
         )
     CallbackQuery.from_user.first_name
     chat_id = CallbackQuery.message.chat.id
-    if await is_active_chat(chat_id):
+    if is_active_chat(chat_id):
             
         await CallbackQuery.answer("Now streaming in 200% volume!", show_alert=True)
         await CallbackQuery.edit_message_text(
@@ -720,7 +720,7 @@ async def fourth(_, CallbackQuery):
         )
     CallbackQuery.from_user.first_name
     chat_id = CallbackQuery.message.chat.id
-    if await is_active_chat(chat_id):
+    if is_active_chat(chat_id):
             
         await CallbackQuery.answer("Now streaming 150 volume!", show_alert=True)
         await CallbackQuery.edit_message_text(
@@ -742,7 +742,7 @@ async def third(_, CallbackQuery):
         )
     CallbackQuery.from_user.first_name
     chat_id = CallbackQuery.message.chat.id
-    if await is_active_chat(chat_id):
+    if is_active_chat(chat_id):
             
         await CallbackQuery.answer("Now streaming in 100% volume!", show_alert=True)
         await CallbackQuery.edit_message_text(
@@ -765,7 +765,7 @@ async def second(_, CallbackQuery):
         )
     CallbackQuery.from_user.first_name
     chat_id = CallbackQuery.message.chat.id
-    if await is_active_chat(chat_id):
+    if is_active_chat(chat_id):
             
         await CallbackQuery.answer("Now streaming in 50% volume!", show_alert=True)
         await CallbackQuery.edit_message_text(
@@ -788,7 +788,7 @@ async def first(_, CallbackQuery):
         )
     CallbackQuery.from_user.first_name
     chat_id = CallbackQuery.message.chat.id
-    if await is_active_chat(chat_id):
+    if is_active_chat(chat_id):
             
         await CallbackQuery.answer("Now streaming in 20% volume!", show_alert=True)
         await CallbackQuery.edit_message_text(
