@@ -41,9 +41,9 @@ else:
 BOT_USERNAME = bot.username
 
 ub = ubot.get_me()
-ASS_ID = ubot.id
-if ubot.last_name:
-    ASS_NAME = ubot.first_name + " " + ubot.last_name
+ASS_ID = ub.id
+if ub.last_name:
+    ASS_NAME = ub.first_name + " " + ub.last_name
 else:
-    ASS_NAME = ubot.first_name
-ASS_USERNAME = ubot.username
+    ASS_NAME = ub.first_name
+ASS_USERNAME = ub.username
