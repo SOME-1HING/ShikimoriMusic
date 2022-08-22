@@ -10,8 +10,8 @@ from ShikimoriMusic.vars import MONGO_DB_URI
 
 
 client = MongoClient()
-client = MongoClient(MONGO_DB_URI, "27017")["ShikimoriMusic"]
-motor = motor_asyncio.AsyncIOMotorClient(MONGO_DB_URI, "27017")
+client = MongoClient(MONGO_DB_URI, 27017)["ShikimoriMusic"]
+motor = motor_asyncio.AsyncIOMotorClient(MONGO_DB_URI, 27017)
 db = motor["ShikimoriMusic"]
 db = client["ShikimoriMusic"]
 try:
