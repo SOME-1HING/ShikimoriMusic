@@ -3,10 +3,10 @@ from asyncio import QueueEmpty
 from pytgcalls.types.input_stream import InputAudioStream
 from pytgcalls.types.input_stream import InputStream
 
-from pyrogram import Client, filters
+from pyrogram import filters
 from pyrogram.types import Message
 
-from ShikimoriMusic import app
+from ShikimoriMusic import pbot
 from ShikimoriMusic.vars import que
 from ShikimoriMusic.mongo.queue import (
     is_active_chat,
@@ -23,7 +23,7 @@ from ShikimoriMusic.calls.queues import clear, get, is_empty, task_done
 async def member_permissions(chat_id: int, user_id: int):
     perms = []
     try:
-        member = await app.get_chat_member(chat_id, user_id)
+        member = await pbot.get_chat_member(chat_id, user_id)
     except Exception:
         return []
     if member.can_post_messages:
@@ -50,7 +50,7 @@ async def member_permissions(chat_id: int, user_id: int):
 from ShikimoriMusic.setup.administrator import adminsOnly
 
 
-@app.on_message(command(["pause"]) & other_filters)
+@pbot.on_message(command(["pause"]) & other_filters)
 async def pause(_, message: Message):
     if message.sender_chat:
         return await message.reply_text(
@@ -77,7 +77,7 @@ async def pause(_, message: Message):
     )
 
 
-@app.on_message(command(["resume"]) & other_filters)
+@pbot.on_message(command(["resume"]) & other_filters)
 async def resume(_, message: Message):
     if message.sender_chat:
         return await message.reply_text(
@@ -105,7 +105,7 @@ async def resume(_, message: Message):
         )
 
 
-@app.on_message(command(["end"]) & other_filters)
+@pbot.on_message(command(["end"]) & other_filters)
 async def stop(_, message: Message):
     if message.sender_chat:
         return await message.reply_text(
@@ -133,7 +133,7 @@ async def stop(_, message: Message):
         )
 
 
-@app.on_message(command(["skip"]) & other_filters)
+@pbot.on_message(command(["skip"]) & other_filters)
 async def skip(_, message: Message):
     if message.sender_chat:
         return await message.reply_text(
@@ -171,7 +171,7 @@ async def skip(_, message: Message):
             )
 
 
-@app.on_message(filters.command(["cleandb"]))
+@pbot.on_message(filters.command(["cleandb"]))
 async def stop_cmd(_, message):
     if message.sender_chat:
         return await message.reply_text(
