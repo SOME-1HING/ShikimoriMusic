@@ -3,47 +3,47 @@ from ShikimoriMusic.mongo import db
 pytgdb = db.pytg
 admindb = db.admin
 
-async def get_active_chats() -> list:
+def get_active_chats() -> list:
     chats = pytgdb.find({"chat_id": {"$lt": 0}})
     if not chats:
         return []
     chats_list = []
-    for chat in await chats.to_list(length=1000000000):
+    for chat in chats.to_list(length=1000000000):
         chats_list.append(chat)
     return chats_list
 
-async def is_active_chat(chat_id: int) -> bool:
-    chat = await pytgdb.find_one({"chat_id": chat_id})
+def is_active_chat(chat_id: int) -> bool:
+    chat = pytgdb.find_one({"chat_id": chat_id})
     if not chat:
         return False
     return True
 
-async def add_active_chat(chat_id: int):
-    is_served = await is_active_chat(chat_id)
+def add_active_chat(chat_id: int):
+    is_served = is_active_chat(chat_id)
     if is_served:
         return
-    return await pytgdb.insert_one({"chat_id": chat_id})
+    return pytgdb.insert_one({"chat_id": chat_id})
 
-async def remove_active_chat(chat_id: int):
-    is_served = await is_active_chat(chat_id)
+def remove_active_chat(chat_id: int):
+    is_served = is_active_chat(chat_id)
     if not is_served:
         return
-    return await pytgdb.delete_one({"chat_id": chat_id})
+    return pytgdb.delete_one({"chat_id": chat_id})
 
-async def is_music_playing(chat_id: int) -> bool:
-    chat = await admindb.find_one({"chat_id_toggle": chat_id})
+def is_music_playing(chat_id: int) -> bool:
+    chat = admindb.find_one({"chat_id_toggle": chat_id})
     if not chat:
         return True
     return False
 
-async def music_on(chat_id: int):
-    is_karma = await is_music_playing(chat_id)
+def music_on(chat_id: int):
+    is_karma = is_music_playing(chat_id)
     if is_karma:
         return
-    return await admindb.delete_one({"chat_id_toggle": chat_id})
+    return admindb.delete_one({"chat_id_toggle": chat_id})
 
-async def music_off(chat_id: int):
-    is_karma = await is_music_playing(chat_id)
+def music_off(chat_id: int):
+    is_karma = is_music_playing(chat_id)
     if not is_karma:
         return
-    return await admindb.insert_one({"chat_id_toggle": chat_id})
+    return admindb.insert_one({"chat_id_toggle": chat_id})
