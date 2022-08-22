@@ -1,1 +1,1 @@
-worker: python3 -m robot
+worker: python3 -m ShikimoriMusic

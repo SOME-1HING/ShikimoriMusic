@@ -1,10 +1,13 @@
 {
-    "name": "M8N Music Bot v2.0",
-    "description": "Telegram Music Bot from Team M8N allows you to stream music trought the telegram voice chat feature !!",
-   "logo": "https://telegra.ph/file/7c8fc17112d22814da2e9.jpg",
-    "keywords": ["telegram music bot", "voice chat", "pytgcalls"],
-    "repository": "https://github.com/UnknownMortal/Music-Bot-v2",
-    "stack": "container",
+    "name": "ShikimoriMusic",
+    "description": "Telegram bot for Streaming  Music trought the Telegram Group Video Chat, powered by pytgcalls and pyrogram",
+    "logo": "https://telegra.ph/file/484f10a04e17f2ac871f2.jpg",
+    "keywords": [
+        "pytgcalls",
+        "telegram bot",
+        "pyrogram"
+    ],
+    "repository": "https://github.com/SOME-1HING/ShikimoriMusic",
     "env": {
         "SESSION_NAME": {
             "description": "fill with the pyrogram session string of your assistant account",
@@ -81,12 +84,21 @@
             "value": ""
         }
     },
+    "addons": [],
     "buildpacks": [
-    {
-      "url": "https://github.com/jonathanong/heroku-buildpack-ffmpeg-latest.git"
+        {
+            "url": "heroku/python"
+        },
+        {
+            "url": "https://github.com/jonathanong/heroku-buildpack-ffmpeg-latest.git"
+        }
+    ],
+    "formation": {
+        "worker": {
+            "quantity": 1,
+            "size": "free"
+        }
     },
-    {
-      "url": "heroku/python"
+    "stack": "container"
     }
-  ]
-}
+
