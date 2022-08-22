@@ -29,7 +29,7 @@ async def load_start():
         except Exception as e:
             LOGGER.info("Error came while clearing db")
             pass
-    await pbot.send_message(OWNER_ID, "**Music Bot Started Successfully !!**")
+    #await pbot.send_message(OWNER_ID, "**Music Bot Started Successfully !!**")
    # Copyrighted Area
     LOGGER.info("[INFO]: STARTED")
     
