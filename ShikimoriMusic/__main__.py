@@ -4,7 +4,7 @@ import requests
 from pyrogram import Client
 from pytgcalls import idle
 
-from ShikimoriMusic import LOGGER, bot
+from ShikimoriMusic import LOGGER, pbot
 from ShikimoriMusic.mongo.queue import get_active_chats, remove_active_chat
 from ShikimoriMusic.calls.calls import run
 from ShikimoriMusic.vars import API_ID, API_HASH, BOT_TOKEN, BG_IMG, OWNER_ID
@@ -29,7 +29,7 @@ async def load_start():
         except Exception as e:
             LOGGER.info("Error came while clearing db")
             pass
-    await bot.send_message(OWNER_ID, "**Music Bot Started Successfully !!**")
+    await pbot.send_message(OWNER_ID, "**Music Bot Started Successfully !!**")
    # Copyrighted Area
     LOGGER.info("[INFO]: STARTED")
     
