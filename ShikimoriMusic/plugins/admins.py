@@ -7,7 +7,6 @@ from pyrogram import filters
 from pyrogram.types import Message
 
 from ShikimoriMusic import pbot
-from ShikimoriMusic.vars import que
 from ShikimoriMusic.mongo.queue import (
     is_active_chat,
     remove_active_chat,

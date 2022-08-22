@@ -23,8 +23,6 @@ from pyrogram.errors import UserAlreadyParticipant, UserNotParticipant
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton, Message
 from pyrogram.errors import UserNotParticipant
 
-
-from ShikimoriMusic import BOT_NAME, BOT_USERNAME
 from ShikimoriMusic.calls import calls, queues
 from ShikimoriMusic.calls.youtube import download
 from ShikimoriMusic.calls import convert as cconvert
@@ -40,10 +38,8 @@ from ShikimoriMusic.vars import (
     que,
     SUPPORT_CHAT,
     UPDATE,
-    BOT_NAME,
-    BOT_USERNAME,
 )
-from ShikimoriMusic import ASS_USERNAME, BOT_ID, ASS_NAME, ASS_ID
+from ShikimoriMusic import ASS_USERNAME, BOT_ID, ASS_NAME, ASS_ID, BOT_NAME, BOT_USERNAME
 from ShikimoriMusic.setup.filters import command
 from ShikimoriMusic.setup.errors import DurationLimitError
 from ShikimoriMusic.setup.gets import get_url, get_file_name
