@@ -5,7 +5,6 @@ from pyrogram import Client
 from pytgcalls import idle
 
 from ShikimoriMusic import LOGGER, bot
-from ShikimoriMusic.mongo.functions import clean_restart_stage
 from ShikimoriMusic.mongo.queue import get_active_chats, remove_active_chat
 from ShikimoriMusic.calls.calls import run
 from ShikimoriMusic.vars import API_ID, API_HASH, BOT_TOKEN, BG_IMG, OWNER_ID
@@ -17,17 +16,6 @@ with open("./etc/foreground.png", "wb") as file:
 
 
 async def load_start():
-    restart_data = await clean_restart_stage()
-    if restart_data:
-        LOGGER.info("[INFO]: SENDING RESTART STATUS")
-        try:
-            await bot.edit_message_text(
-                restart_data["chat_id"],
-                restart_data["message_id"],
-                "**Restarted the Bot Successfully !!**",
-            )
-        except Exception:
-            pass
     served_chats = []
     try:
         chats = await get_active_chats()
