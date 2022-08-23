@@ -5,7 +5,7 @@ from pyrogram import Client
 from ShikimoriMusic.calls import client as USER
 from pyrogram import filters
 from pyrogram.types import Chat, Message, User
-from ShikimoriMusic.vars import (
+from ShikimoriMusic import (
     BOT_USERNAME,
 )
 
