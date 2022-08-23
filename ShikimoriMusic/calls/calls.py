@@ -7,6 +7,13 @@ from pytgcalls.types.input_stream import InputStream
 from ShikimoriMusic.mongo.queue import remove_active_chat
 from ShikimoriMusic.calls import queues
 from ShikimoriMusic import pytgcalls
+from ShikimoriMusic.vars import API_HASH, API_ID, SESSION_STRING
+
+
+
+client = Client(SESSION_STRING, API_ID, API_HASH)
+pytgcalls = PyTgCalls(client)  
+
 
 @pytgcalls.on_kicked()
 async def on_kicked(client: PyTgCalls, chat_id: int) -> None:
