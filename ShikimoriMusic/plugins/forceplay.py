@@ -418,7 +418,7 @@ async def play(_, message: Message):
         x = await loop.run_in_executor(None, download, url, my_hook)
         file_path = await cconvert(x)
 
-    if await is_active_chat(chat_id):
+    if is_active_chat(chat_id):
         try:
             queues.clear(chat_id)
         except asyncio.QueueEmpty:
