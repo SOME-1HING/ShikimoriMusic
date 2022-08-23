@@ -286,7 +286,7 @@ async def play(_, message: Message):
 
         requested_by = message.from_user.first_name
         await generate_cover(requested_by, title, views, duration, thumbnail)
-        file_path = await cconvert(
+        file_path = await cconvert.convert(
             (await message.reply_to_message.download(file_name))
             if not os.path.isfile(os.path.join("downloads", file_name))
             else file_name
