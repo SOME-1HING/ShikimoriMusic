@@ -1,6 +1,6 @@
 from os import listdir, mkdir
 from pyrogram import Client
-from ShikimoriMusic import config
+from ShikimoriMusic import vars
 from ShikimoriMusic.calls.queues import clear, get, is_empty, put, task_done
 from ShikimoriMusic.calls import queues
 from ShikimoriMusic.calls.youtube import download
