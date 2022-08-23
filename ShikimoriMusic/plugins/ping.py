@@ -4,7 +4,7 @@ import time
 from platform import python_version
 from psutil import cpu_percent, virtual_memory, disk_usage, boot_time
 from ShikimoriMusic.vars import SUDO_USERS
-from pyrogram import Client, filters
+from pyrogram import Client
 from pyrogram.types import Message
 from pyrogram import __version__
 
@@ -53,34 +53,38 @@ async def ping(client: Client, message: Message):
         parse_mode="html",
     )
 
-@Client.on_message(command("sysinfo") & SUDO_USERS)
+@Client.on_message(command("sysinfo"))
 async def sysinfo(client: Client, message: Message):
-    uptime = datetime.datetime.fromtimestamp(boot_time()).strftime("%Y-%m-%d %H:%M:%S")
-    status = "<b>======[ 𝚂𝚈𝚂𝚃𝙴𝙼 𝚂𝚃𝙰𝚃𝙸𝚂𝚃𝙸𝙲𝚂 ]======</b>\n\n"
-    status += f"<b>📍 𝚂𝚢𝚜𝚝𝚎𝚖 𝚞𝚙𝚝𝚒𝚖𝚎 :</b> <code>{str(uptime)}" + "</code>\n\n"
+    if message.from_user.id in SUDO_USERS:
+        uptime = datetime.datetime.fromtimestamp(boot_time()).strftime("%Y-%m-%d %H:%M:%S")
+        status = "<b>======[ 𝚂𝚈𝚂𝚃𝙴𝙼 𝚂𝚃𝙰𝚃𝙸𝚂𝚃𝙸𝙲𝚂 ]======</b>\n\n"
+        status += f"<b>📍 𝚂𝚢𝚜𝚝𝚎𝚖 𝚞𝚙𝚝𝚒𝚖𝚎 :</b> <code>{str(uptime)}" + "</code>\n\n"
 
-    uname = platform.uname()
-    status += "<b>┍</b>\n"
-    status += f"<b>    ◤ 𝚂𝚢𝚜𝚝𝚎𝚖 :</b> <code>{str(uname.system)}" + "</code>\n"
-    status += f"<b>    ◤ 𝚁𝚎𝚕𝚎𝚊𝚜𝚎 :</b> <code>{str(uname.release)}" + "</code>\n"
-    status += f"<b>    ◤ 𝙼𝚊𝚌𝚑𝚒𝚗𝚎 :</b> <code>{str(uname.machine)}" + "</code>\n"
-    status += f"<b>    ◤ 𝙿𝚛𝚘𝚌𝚎𝚜𝚜𝚘𝚛 :</b> <code>{str(uname.processor)}" + "</code>\n"
+        uname = platform.uname()
+        status += "<b>┍</b>\n"
+        status += f"<b>    ◤ 𝚂𝚢𝚜𝚝𝚎𝚖 :</b> <code>{str(uname.system)}" + "</code>\n"
+        status += f"<b>    ◤ 𝚁𝚎𝚕𝚎𝚊𝚜𝚎 :</b> <code>{str(uname.release)}" + "</code>\n"
+        status += f"<b>    ◤ 𝙼𝚊𝚌𝚑𝚒𝚗𝚎 :</b> <code>{str(uname.machine)}" + "</code>\n"
+        status += f"<b>    ◤ 𝙿𝚛𝚘𝚌𝚎𝚜𝚜𝚘𝚛 :</b> <code>{str(uname.processor)}" + "</code>\n"
 
-    status += f"<b>    ◤ 𝙽𝚘𝚍𝚎 𝚗𝚊𝚖𝚎 :</b> <code>{str(uname.node)}" + "</code>\n"
-    status += f"<b>    ◤ 𝚅𝚎𝚛𝚜𝚒𝚘𝚗 :</b> <code>{str(uname.version)}" + "</code>\n\n"
+        status += f"<b>    ◤ 𝙽𝚘𝚍𝚎 𝚗𝚊𝚖𝚎 :</b> <code>{str(uname.node)}" + "</code>\n"
+        status += f"<b>    ◤ 𝚅𝚎𝚛𝚜𝚒𝚘𝚗 :</b> <code>{str(uname.version)}" + "</code>\n\n"
 
-    mem = virtual_memory()
-    cpu = cpu_percent()
-    disk = disk_usage("/")
-    status += f"<b>    ◤ 𝙲𝙿𝚄 𝚞𝚜𝚊𝚐𝚎 :</b> <code>{str(cpu)}" + " %</code>\n"
-    status += f"<b>    ◤ 𝚁𝚊𝚖 𝚞𝚜𝚊𝚐𝚎 :</b> <code>{str(mem[2])}" + " %</code>\n"
-    status += f"<b>    ◤ 𝚂𝚝𝚘𝚛𝚊𝚐𝚎 𝚞𝚜𝚎𝚍 :</b> <code>{str(disk[3])}" + " %</code>\n\n"
-    status += f"<b>    ◤ 𝙿𝚢𝚝𝚑𝚘𝚗 𝚟𝚎𝚛𝚜𝚒𝚘𝚗 :</b> <code>{python_version()}" + "</code>\n"
+        mem = virtual_memory()
+        cpu = cpu_percent()
+        disk = disk_usage("/")
+        status += f"<b>    ◤ 𝙲𝙿𝚄 𝚞𝚜𝚊𝚐𝚎 :</b> <code>{str(cpu)}" + " %</code>\n"
+        status += f"<b>    ◤ 𝚁𝚊𝚖 𝚞𝚜𝚊𝚐𝚎 :</b> <code>{str(mem[2])}" + " %</code>\n"
+        status += f"<b>    ◤ 𝚂𝚝𝚘𝚛𝚊𝚐𝚎 𝚞𝚜𝚎𝚍 :</b> <code>{str(disk[3])}" + " %</code>\n\n"
+        status += f"<b>    ◤ 𝙿𝚢𝚝𝚑𝚘𝚗 𝚟𝚎𝚛𝚜𝚒𝚘𝚗 :</b> <code>{python_version()}" + "</code>\n"
 
-    status += (
-        "<b>    ◤ 𝙻𝚒𝚋𝚛𝚊𝚛𝚢 𝚟𝚎𝚛𝚜𝚒𝚘𝚗 :</b> <code>"
-        + str(__version__)
-        + "</code>\n"
-    )
-    status += "<b>┖</b>\n"
-    await message.reply_text(status, parse_mode="html")
+        status += (
+            "<b>    ◤ 𝙻𝚒𝚋𝚛𝚊𝚛𝚢 𝚟𝚎𝚛𝚜𝚒𝚘𝚗 :</b> <code>"
+            + str(__version__)
+            + "</code>\n"
+        )
+        status += "<b>┖</b>\n"
+        await message.reply_text(status, parse_mode="html")
+    
+    else:
+        await message.reply_text("This is SUDO restricted command.")
