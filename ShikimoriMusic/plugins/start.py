@@ -39,12 +39,6 @@ async def start_(client: Client, message: Message):
                     InlineKeyboardButton(
                         "✚ ᴄʟɪᴄᴋ ʜᴇʀᴇ ᴛᴏ ᴀᴅᴅ ᴍᴇ", url=f"https://t.me/{BOT_USERNAME}?startgroup=true")
                 ],
-                [
-                    InlineKeyboardButton(
-                        "📡 ᴄʜᴀɴɴᴇʟ", url=f"https://t.me/{UPDATE}"),
-                    InlineKeyboardButton(
-                        "☁️ ᴏᴛʜᴇʀs", callback_data="others")
-                ]
            ]
         ),
     )
