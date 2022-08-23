@@ -3,6 +3,7 @@ from pytgcalls import PyTgCalls
 from pytgcalls.types import Update
 from pytgcalls.types.input_stream import InputAudioStream
 from pytgcalls.types.input_stream import InputStream
+from pyrogram import Client
 
 from ShikimoriMusic.mongo.queue import remove_active_chat
 from ShikimoriMusic.calls import queues
