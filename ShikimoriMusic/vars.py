@@ -24,5 +24,6 @@ HEROKU_APP_NAME = os.environ.get("HEROKU_APP_NAME", None)
 DURATION_LIMIT = int(os.environ.get("DURATION_LIMIT", "600"))
 CMD_MUSIC = list(os.environ.get("CMD_MUSIC", "/ !").split())
 MONGO_DB_URI = os.environ.get("MONGO_DB_URI", None)
+LOG_CHANNEL = os.environ.get("LOG_CHANNEL", None)
 
 SUDO_USERS.add(OWNER_ID)

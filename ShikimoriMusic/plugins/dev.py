@@ -94,3 +94,16 @@ async def dyno_usage(message: Message):
     
     else:
         await message.reply_text("This is SUDO restricted command.")
+
+@Client.on_message(command("logs"))
+async def logs(message: Message):
+    if message.from_user.id in SUDO_USERS:
+        chat = message.chat
+        user = message.from_user
+        with open("ShikimoriMusic_logs.txt", "rb") as f:
+            await pbot.send_document(document=f, filename=f.name, chat_id=user.id)
+        if chat.type == "private":
+            await message.reply_text("`Logs sent. Check your pm.`")
+    
+    else:
+        await message.reply_text("This is SUDO restricted command.")
