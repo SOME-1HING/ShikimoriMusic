@@ -1,11 +1,6 @@
-import aiofiles
-import ffmpeg
 import asyncio
 import os
 import requests
-import aiohttp
-
-from PIL import Image, ImageFont, ImageDraw, ImageFilter
 
 from pytgcalls import StreamType
 from pytgcalls.types.input_stream import InputStream
@@ -25,6 +20,7 @@ from pyrogram.errors import UserNotParticipant
 
 from ShikimoriMusic.calls import calls, queues
 from ShikimoriMusic.calls.youtube import download
+from ShikimoriMusic.plugins.play import generate_cover
 from ShikimoriMusic.calls import convert as cconvert
 from ShikimoriMusic.mongo.queue import (
     is_active_chat,
@@ -51,119 +47,9 @@ useer = "NaN"
 flex = {}
 
 
-def transcode(filename):
-    ffmpeg.input(filename).output(
-        "input.raw", format="s16le", acodec="pcm_s16le", ac=2, ar="48k"
-    ).overwrite_output().run()
-    os.remove(filename)
-
-
-# Convert seconds to mm:ss
-def convert_seconds(seconds):
-    seconds = seconds % (24 * 3600)
-    seconds %= 3600
-    minutes = seconds // 60
-    seconds %= 60
-    return "%02d:%02d" % (minutes, seconds)
-
-
-# Convert hh:mm:ss to seconds
-def time_to_seconds(time):
-    stringt = str(time)
-    return sum(int(x) * 60**i for i, x in enumerate(reversed(stringt.split(":"))))
-
-
-def truncate(text):
-    list = text.split(" ")
-    text1 = ""
-    text2 = ""    
-    for i in list:
-        if len(text1) + len(i) < 27:        
-            text1 += " " + i
-        elif len(text2) + len(i) < 25:        
-            text2 += " " + i
-
-    text1 = text1.strip()
-    text2 = text2.strip()     
-    return [text1,text2]
-
-# Change image size
-def changeImageSize(maxWidth, maxHeight, image):
-    widthRatio = maxWidth / image.size[0]
-    heightRatio = maxHeight / image.size[1]
-    newWidth = int(widthRatio * image.size[0])
-    newHeight = int(heightRatio * image.size[1])
-    newImage = image.resize((newWidth, newHeight))
-    return newImage
-
-
-async def generate_cover(requested_by, title, views, duration, thumbnail):
-    async with aiohttp.ClientSession() as session:
-        async with session.get(thumbnail) as resp:
-            if resp.status == 200:
-                f = await aiofiles.open("background.png", mode="wb")
-                await f.write(await resp.read())
-                await f.close()
-
-    image = Image.open(f"./background.png")
-    black = Image.open("etc/black.jpg")
-    img = Image.open("etc/robot.png")
-    image5 = changeImageSize(1280, 720, img)
-    image1 = changeImageSize(1280, 720, image)
-    image1 = image1.filter(ImageFilter.BoxBlur(10))
-    image11 = changeImageSize(1280, 720, image)
-    image1 = image11.filter(ImageFilter.BoxBlur(10))
-    image2 = Image.blend(image1,black,0.6)
-
-    # Cropping circle from thubnail
-    image3 = image11.crop((280,0,1000,720))
-    #lum_img = Image.new('L', [720,720] , 0)
-   # draw = ImageDraw.Draw(lum_img)
-   # draw.pieslice([(0,0), (720,720)], 0, 360, fill = 255, outline = "white")
-   # img_arr =np.array(image3)
-    #lum_img_arr =np.array(lum_img)
-    #final_img_arr = np.dstack((img_arr,lum_img_arr))
-    #image3 = Image.fromarray(final_img_arr)
-    image3 = image3.resize((500,500))
-    
-
-    image2.paste(image3, (100,115))
-    image2.paste(image5, mask = image5)
-
-    # fonts
-    font1 = ImageFont.truetype(r'etc/robot.otf', 30)
-    font2 = ImageFont.truetype(r'etc/robot.otf', 60)
-    font3 = ImageFont.truetype(r'etc/robot.otf', 49)
-    font4 = ImageFont.truetype(r'etc/Mukta-ExtraBold.ttf', 35)
-
-    image4 = ImageDraw.Draw(image2)
-
-    # title
-    title1 = truncate(title)
-    image4.text((670, 280), text=title1[0], fill="white", font = font3, align ="left") 
-    image4.text((670, 332), text=title1[1], fill="white", font = font3, align ="left") 
-
-    # description
-    views = f"Views : {views}"
-    duration = f"Duration : {duration} minutes"
-    channel = f"Request : {BOT_NAME} Bot"
-
-    image4.text((670, 410), text=views, fill="white", font = font4, align ="left") 
-    image4.text((670, 460), text=duration, fill="white", font = font4, align ="left") 
-    image4.text((670, 510), text=channel, fill="white", font = font4, align ="left")
-
-    
-    image2.save(f"final.png")
-    os.remove(f"background.png")
-    final = f"temp.png"
-    return final
-     
-
-
-
 # play
 @Client.on_message(
-    command(["play", f"play@{BOT_USERNAME}"])
+    command(["playforce", f"playforce@{BOT_USERNAME}"])
     & filters.group
     & ~filters.edited
     & ~filters.forwarded
@@ -407,7 +293,7 @@ async def play(_, message: Message):
 
         loop = asyncio.get_event_loop()
         x = await loop.run_in_executor(None, download, url, my_hook)
-        file_path = await cconvert.convert(x)
+        file_path = await cconvert(x)
     else:
         if len(message.command) < 2:
             return await lel.edit(
