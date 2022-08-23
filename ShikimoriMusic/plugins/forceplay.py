@@ -425,8 +425,7 @@ async def play(_, message: Message):
             pass
         remove_active_chat(message.chat.id)
         await calls.pytgcalls.leave_group_call(message.chat.id)
-        
-        position = await queues.put(message.chat.id, file=file_path)
+
         await message.reply_photo(
             photo="final.png",
             reply_markup=keyboard,
@@ -434,6 +433,20 @@ async def play(_, message: Message):
                 url, message.from_user.mention(), message.chat.title, message.chat.username
             ),
         )
+        try:
+            await calls.pytgcalls.join_group_call(
+                message.chat.id,
+                InputStream(
+                    InputAudioStream(
+                        file_path,
+                    ),
+                ),
+                stream_type=StreamType().local_stream,
+            )
+        except Exception:
+            return await lel.edit(
+                "Error Joining Voice Chat. Make sure Voice Chat is Enabled.\n\n If YES, then make sure Music Bots Assistant is not banned in your group or available in your group!"
+            )
     else:
         try:
             await calls.pytgcalls.join_group_call(
