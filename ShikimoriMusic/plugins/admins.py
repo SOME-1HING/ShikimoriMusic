@@ -116,7 +116,7 @@ async def stop(_, message: Message):
         return
     checking = message.from_user.mention
     chat_id = message.chat.id
-    if await is_active_chat(chat_id):
+    if is_active_chat(chat_id):
         try:
             clear(chat_id)
         except QueueEmpty:
