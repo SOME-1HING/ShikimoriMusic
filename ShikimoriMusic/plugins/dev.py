@@ -33,7 +33,7 @@ async def leave(message: Message):
     else:
         await message.reply_text("Send a valid chat ID")
 
-@Client.on_message(command("usage") & filters.user(SUDO_USERS))
+@Client.on_message(command("usage") & SUDO_USERS)
 async def dyno_usage(message: Message):
     """
     Get your account Dyno Usage
