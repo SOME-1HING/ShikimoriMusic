@@ -16,7 +16,7 @@ heroku_api = "https://api.heroku.com"
 Heroku = heroku3.from_key(HEROKU_API_KEY)
 
 @Client.on_message(command("leave"))
-async def leave(message: Message):
+async def leave(_, message: Message):
     if message.from_user.id in SUDO_USERS:
         if len(message.command) < 2:
             return await message.reply_text("**Usage:**\n/leave [CHAT ID]")
@@ -36,7 +36,7 @@ async def leave(message: Message):
         await message.reply_text("This is SUDO restricted command.")
 
 @Client.on_message(command("usage"))
-async def dyno_usage(message: Message):
+async def dyno_usage(_, message: Message):
     if message.from_user.id in SUDO_USERS:
         die = await message.reply_text("`Processing...`")
         useragent = (
@@ -96,7 +96,7 @@ async def dyno_usage(message: Message):
         await message.reply_text("This is SUDO restricted command.")
 
 @Client.on_message(command("logs"))
-async def logs(message: Message):
+async def logs(_, message: Message):
     if message.from_user.id in SUDO_USERS:
         chat = message.chat
         user = message.from_user
