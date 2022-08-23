@@ -27,3 +27,4 @@ MONGO_DB_URI = os.environ.get("MONGO_DB_URI", None)
 LOG_CHANNEL = os.environ.get("LOG_CHANNEL", None)
 
 SUDO_USERS = SUDOS.add(OWNER_ID)
+SUDO_USERS = list(SUDO_USERS)
