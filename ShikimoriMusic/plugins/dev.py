@@ -15,7 +15,7 @@ from pyrogram.types import Message
 heroku_api = "https://api.heroku.com"
 Heroku = heroku3.from_key(HEROKU_API_KEY)
 
-@Client.on_message(command("leave") & filters.user(SUDO_USERS))
+@Client.on_message(command("leave") & SUDO_USERS)
 async def leave(message: Message):
 
     if len(message.command) < 2:
