@@ -418,15 +418,14 @@ async def play(_, message: Message):
         x = await loop.run_in_executor(None, download, url, my_hook)
         file_path = await cconvert(x)
 
-    if is_active_chat(chat_id):
+    if is_active_chat(message.chat.id):
         try:
-            queues.clear(chat_id)
+            queues.clear(message.chat.id)
         except asyncio.QueueEmpty:
             pass
-        remove_active_chat(chat_id)
-        await calls.pytgcalls.leave_group_call(chat_id)
-
-    if is_active_chat(message.chat.id):
+        remove_active_chat(message.chat.id)
+        await calls.pytgcalls.leave_group_call(message.chat.id)
+        
         position = await queues.put(message.chat.id, file=file_path)
         await message.reply_photo(
             photo="final.png",
