@@ -53,7 +53,7 @@ async def ping(client: Client, message: Message):
         parse_mode="html",
     )
 
-@Client.on_message(command("sysinfo") & filters.private & SUDO_USERS)
+@Client.on_message(command("sysinfo") & SUDO_USERS)
 async def sysinfo(client: Client, message: Message):
     uptime = datetime.datetime.fromtimestamp(boot_time()).strftime("%Y-%m-%d %H:%M:%S")
     status = "<b>======[ 𝚂𝚈𝚂𝚃𝙴𝙼 𝚂𝚃𝙰𝚃𝙸𝚂𝚃𝙸𝙲𝚂 ]======</b>\n\n"
