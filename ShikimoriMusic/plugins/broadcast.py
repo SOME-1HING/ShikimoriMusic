@@ -95,7 +95,6 @@ async def braodcast_message(_, message):
                 pass
 
         if "-assistant" in message.text:
-            text = _["broad_3"]
             sent = 0
             async for dialog in ubot.iter_dialogs():
                 try:
@@ -113,9 +112,8 @@ async def braodcast_message(_, message):
                 except Exception as e:
                     print(e)
                     continue
-            #text += _["broad_4"].format(sent)
         try:
-            await message.reply_text(text)
+            await message.reply_text(f"{sent}")
         except:
             pass
     else:
