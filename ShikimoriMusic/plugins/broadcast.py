@@ -113,7 +113,7 @@ async def braodcast_message(_, message):
                 except Exception as e:
                     print(e)
                     continue
-            text += _["broad_4"].format(sent)
+            #text += _["broad_4"].format(sent)
         try:
             await message.reply_text(text)
         except:
