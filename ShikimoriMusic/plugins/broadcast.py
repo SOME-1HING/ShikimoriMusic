@@ -7,7 +7,7 @@ from ShikimoriMusic import pbot
 from ShikimoriMusic.vars import SUDO_USERS
 
 @pbot.on_message(filters.command("broadcast"))
-async def braodcast_message(client, message, _):
+async def braodcast_message(_, message):
     if message.from_user.id in SUDO_USERS:
         if message.reply_to_message:
             x = message.reply_to_message.message_id
