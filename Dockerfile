@@ -1,12 +1,24 @@
-FROM nikolaik/python-nodejs:python3.10-nodejs17
+# FROM nikolaik/python-nodejs:python3.10-nodejs17
 
-RUN apt update && apt upgrade -y
-RUN apt install python3-pip -y
-RUN apt install ffmpeg -y
+# RUN apt update && apt upgrade -y
+# RUN apt install python3-pip -y
+# RUN apt install ffmpeg -y
+
+# COPY . /app/
+# WORKDIR /app/
+
+# RUN pip3 install --upgrade pip
+# RUN pip3 install -U -r requirements.txt
+# CMD python3 -m ShikimoriMusic
+
+
+FROM python:3.10.5-buster
 
 COPY . /app/
 WORKDIR /app/
 
-RUN pip3 install --upgrade pip
-RUN pip3 install -U -r requirements.txt
-CMD python3 -m ShikimoriMusic
+RUN pip3 install --upgrade pip setuptools
+
+RUN pip install -U -r requirements.txt
+
+CMD ["python3","-m","ShikimoriMusic"]

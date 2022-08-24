@@ -12,6 +12,6 @@ from ShikimoriMusic import (
 
 @USER.on_message(filters.text & filters.private & ~filters.me & ~filters.bot)
 async def pmPermit(client: USER, message: Message):
-  await add_served_user(message.from_user.id)
+  add_served_user(message.from_user.id)
   await USER.send_message(message.chat.id,"Hey 👋 I am the assistant of Shikimori Music bot, didn't have a time to talk with you 🙂 kindly join @LigmaSupport for getting Support.")
   return
