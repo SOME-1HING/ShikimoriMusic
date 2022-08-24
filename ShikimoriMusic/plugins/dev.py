@@ -101,7 +101,7 @@ async def logs(_, message: Message):
         chat = message.chat
         user = message.from_user
         with open("ShikimoriMusic_logs.txt", "rb") as f:
-            await pbot.send_document(document=f, filename=f.name, chat_id=user.id)
+            await pbot.send_document(document=f, chat_id=user.id)
         if chat.type == "private":
             await message.reply_text("`Logs sent. Check your pm.`")
     
