@@ -3,7 +3,7 @@ from ShikimoriMusic.mongo.users import get_served_users
 from pyrogram import filters
 from pyrogram.errors import FloodWait
 import asyncio
-from ShikimoriMusic import pbot
+from ShikimoriMusic import pbot, ubot
 from ShikimoriMusic.vars import SUDO_USERS
 
 @pbot.on_message(filters.command("broadcast"))
@@ -93,5 +93,31 @@ async def braodcast_message(_, message):
                 await message.reply_text(_["broad_7"].format(susr))
             except:
                 pass
+
+        if "-assistant" in message.text:
+            aw = await message.reply_text(_["broad_2"])
+            text = _["broad_3"]
+            sent = 0
+            async for dialog in ubot.iter_dialogs():
+                try:
+                    await ubot.forward_messages(
+                        dialog.chat.id, y, x
+                    ) if message.reply_to_message else await ubot.send_message(
+                        dialog.chat.id, text=query
+                    )
+                    sent += 1
+                except FloodWait as e:
+                    flood_time = int(e.x)
+                    if flood_time > 200:
+                        continue
+                    await asyncio.sleep(flood_time)
+                except Exception as e:
+                    print(e)
+                    continue
+            text += _["broad_4"].format(sent)
+        try:
+            await aw.edit_text(text)
+        except:
+            pass
     else:
         await message.reply_text("This is SUDO restricted command.")
