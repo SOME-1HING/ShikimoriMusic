@@ -1,3 +1,4 @@
+from ShikimoriMusic.mongo.users import add_served_user
 from pyrogram import Client, filters
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, Message
 
@@ -21,6 +22,7 @@ TIME_DURATION_UNITS = (
 
 @Client.on_message(command("start") & filters.private & ~filters.edited)
 async def start_(client: Client, message: Message):
+    await add_served_user(message.from_user.id)
     await message.reply_text(
         f"""ᴡᴇʟᴄᴏᴍᴇ : {message.from_user.mention()}
 
