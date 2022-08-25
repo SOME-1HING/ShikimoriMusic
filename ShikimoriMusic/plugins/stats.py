@@ -59,8 +59,10 @@ async def stats(_, message: Message):
         status += f"**┈➤ Pʏʀᴏɢʀᴀᴍ Vᴇʀsɪᴏɴ:** `{str(pyrover)}`\n✦"
         status += f"**┈➤ Uᴘᴛɪᴍᴇ:** `{str(botuptime)}`\n"
 
-        await message.reply_text(
-            status
+        img = "https://telegra.ph/file/a0f299ae4eba53370ce8b.mp4"
+        await message.reply_photo(
+            img,
+            caption = status
             + "\n\n**「✪」Bᴏᴛ Sᴛᴀᴛɪsᴛɪᴄs「✪」**:\n\n✦"
             + f"**┈➤ Served Chats:** `{len(get_served_chats())}`\n✦" 
             + f"**┈➤ Served Users:** `{len(get_served_users())}` \n✦"

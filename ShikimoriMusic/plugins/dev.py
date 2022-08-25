@@ -116,6 +116,9 @@ async def sudolist(_, message: Message):
     reply = "<b>Sudo Users:</b>\n"
     for each_user in true_dev:
         user_id = int(each_user)
-        user = pbot.get_chat(user_id)
-        reply += f"• [{user.first_name}]({user_id})\n"
+        user = await pbot.get_users(user_id)
+        user = (
+            user.first_name if not user.mention else user.mention
+        )
+        reply += f"• {user}\n"
     m.edit_text(reply, parse_mode="html")
