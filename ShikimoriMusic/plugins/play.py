@@ -113,7 +113,7 @@ async def generate_cover(requested_by, title, views, duration, thumbnail):
     image2 = Image.blend(image1,black,0.6)
 
     image3 = image11.crop((280,0,1000,720))
-    image3 = image3.resize((250,250))
+    image3 = image3.resize((350,350))
     
 
     image2.paste(image3, (800,210))
