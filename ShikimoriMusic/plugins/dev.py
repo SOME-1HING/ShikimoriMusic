@@ -7,7 +7,7 @@ import requests
 
 from ShikimoriMusic import pbot
 from ShikimoriMusic.vars import SUDO_USERS
-from pyrogram import Client, filters
+from pyrogram import Client
 from ShikimoriMusic.vars import HEROKU_APP_NAME, HEROKU_API_KEY
 from ShikimoriMusic.setup.filters import command
 from pyrogram.types import Message
@@ -20,11 +20,10 @@ async def leave(_, message: Message):
     if message.from_user.id in SUDO_USERS:
         if len(message.command) < 2:
             return await message.reply_text("**Usage:**\n/leave [CHAT ID]")
-        query = message.text.strip().split(None, 1)[1]
-        if query:
-            chat_id = str(query[0])
+        chat_id = int(message.text.strip().split()[1])
+        if chat_id:
             try:
-                await pbot.leave_chat(int(chat_id))
+                await pbot.leave_chat(chat_id)
             except:
                 await message.reply_text(
                     "Beep boop, I could not leave that group(dunno why tho).",
