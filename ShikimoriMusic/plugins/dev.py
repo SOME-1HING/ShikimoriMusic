@@ -6,7 +6,7 @@ import heroku3
 import requests
 
 from ShikimoriMusic import pbot
-from ShikimoriMusic.vars import SUDO_USERS
+from ShikimoriMusic.vars import OWNER_ID, SUDO_USERS
 from pyrogram import Client
 from ShikimoriMusic.vars import HEROKU_APP_NAME, HEROKU_API_KEY
 from ShikimoriMusic.setup.filters import command
@@ -106,3 +106,16 @@ async def logs(_, message: Message):
     
     else:
         await message.reply_text("This is SUDO restricted command.")
+
+@Client.on_message(command(["sudos", "sudolist"]))
+async def sudolist(_, message: Message):
+    m = message.reply_text(
+        "<code>Gathering intel..</code>", parse_mode="html"
+    )
+    true_dev = list(set(SUDO_USERS) - {OWNER_ID})
+    reply = "<b>Sudo Users:</b>\n"
+    for each_user in true_dev:
+        user_id = int(each_user)
+        user = pbot.get_chat(user_id)
+        reply += f"• [{user.first_name}]({user_id})\n"
+    m.edit_text(reply, parse_mode="html")
