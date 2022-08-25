@@ -112,6 +112,7 @@ async def sudolist(_, message: Message):
     m = await message.reply_text(
         "<code>Gathering intel..</code>", parse_mode="html"
     )
+    img = "https://telegra.ph/file/ee64f19caa9cee3cde865.mp4"
     true_dev = list(set(SUDO_USERS) - {OWNER_ID})
     reply = "<b>Sudo Users:</b>\n"
     for each_user in true_dev:
@@ -121,4 +122,5 @@ async def sudolist(_, message: Message):
             user.first_name if not user.mention else user.mention
         )
         reply += f"• {user}\n"
-    await m.edit_text(reply, parse_mode="html")
+    await m.delete()
+    await message.reply_animation(img, caption=reply, parse_mode="html")
