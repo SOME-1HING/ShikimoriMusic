@@ -113,7 +113,7 @@ async def generate_cover(requested_by, title, views, duration, thumbnail):
     image2 = Image.blend(image1,black,0.6)
 
     image3 = image11.crop((280,0,1000,720))
-    image3 = image3.resize((500,500))
+    image3 = image3.resize((250,250))
     
 
     image2.paste(image3, (800,210))
@@ -128,8 +128,8 @@ async def generate_cover(requested_by, title, views, duration, thumbnail):
 
     # title
     title1 = truncate(title)
-    image4.text((175, 225), text=title1[0], fill="white", font = font3, align ="left") 
-    image4.text((175, 265), text=title1[1], fill="white", font = font3, align ="left") 
+    image4.text((150, 225), text=title1[0], fill="white", font = font3, align ="left") 
+    image4.text((150, 280), text=title1[1], fill="white", font = font3, align ="left") 
 
     # description
     views = f"Views : {views}"
