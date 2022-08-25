@@ -177,7 +177,11 @@ async def play(_, message: Message):
     chid = message.chat.id 
 
     if not is_served_chat(chid):
-        add_served_chat(chid)
+        try:
+            add_served_chat(chid)
+            pass
+        except:
+            pass
 
     if message.sender_chat:
         return await message.reply_text(
