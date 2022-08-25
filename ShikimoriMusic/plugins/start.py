@@ -59,7 +59,7 @@ async def start_grp(client: Client, message: Message):
             pass
     botuptime = get_readable_time((time.time() - starttime))
     await message.reply_text(
-        f"Hey {message.from_user.mention()}Hey SOME1HING, I'm here for you at Uchiha Bots Support since : {botuptime}")
+        f"Hey {message.from_user.mention()}, I'm here for you at {message.chat.title} since : {botuptime}")
 
 @Client.on_message(command(["ping"]) & ~filters.edited)
 async def ping_pong(client: Client, message: Message):
@@ -80,8 +80,8 @@ async def welcome(client, message: Message):
     for member in message.new_chat_members:
         if member.id ==OWNER_ID:
             return await message.reply_video(
-                video="https://telegra.ph/file/1be0692f81280f32792ce.mp4",
-                caption="",
+                video="https://telegra.ph/file/e6fcbd9f756006c2329f6.mp4",
+                caption="ʜᴇʏʏ ғᴇʟʟᴀs ! ʟᴏᴏᴋ ᴡʜᴏ ᴀʀʀɪᴠᴇᴅ.... ɪᴛs ᴍʏ ᴏᴡɴᴇʀ ᴜᴡᴜ~",
             )
         if member.id in SUDO_USERS:
             return await message.reply_animation(
