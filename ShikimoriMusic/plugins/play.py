@@ -97,6 +97,7 @@ def changeImageSize(maxWidth, maxHeight, image):
     newImage = image.resize((newWidth, newHeight))
     return newImage
 
+IMG = "https://telegra.ph/file/74bd5aba56c50f5abddd7.jpg"
 
 async def generate_cover(requested_by, title, views, duration, thumbnail):
     async with aiohttp.ClientSession() as session:
@@ -106,25 +107,15 @@ async def generate_cover(requested_by, title, views, duration, thumbnail):
                 await f.write(await resp.read())
                 await f.close()
 
-    image = Image.open(f"./background.png")
+    image = Image.open(IMG)
     black = Image.open("etc/black.jpg")
     img = Image.open("etc/robot.png")
     image5 = changeImageSize(1280, 720, img)
     image1 = changeImageSize(1280, 720, image)
-    image1 = image1.filter(ImageFilter.BoxBlur(10))
     image11 = changeImageSize(1280, 720, image)
-    image1 = image11.filter(ImageFilter.BoxBlur(10))
     image2 = Image.blend(image1,black,0.6)
 
-    # Cropping circle from thubnail
     image3 = image11.crop((280,0,1000,720))
-    #lum_img = Image.new('L', [720,720] , 0)
-   # draw = ImageDraw.Draw(lum_img)
-   # draw.pieslice([(0,0), (720,720)], 0, 360, fill = 255, outline = "white")
-   # img_arr =np.array(image3)
-    #lum_img_arr =np.array(lum_img)
-    #final_img_arr = np.dstack((img_arr,lum_img_arr))
-    #image3 = Image.fromarray(final_img_arr)
     image3 = image3.resize((500,500))
     
 
