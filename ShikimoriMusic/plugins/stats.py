@@ -60,7 +60,7 @@ async def stats(_, message: Message):
         status += f"**┈➤ Uᴘᴛɪᴍᴇ:** `{str(botuptime)}`\n"
 
         img = "https://telegra.ph/file/a0f299ae4eba53370ce8b.mp4"
-        await message.reply_photo(
+        await message.reply_animation(
             img,
             caption = status
             + "\n\n**「✪」Bᴏᴛ Sᴛᴀᴛɪsᴛɪᴄs「✪」**:\n\n✦"

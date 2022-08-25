@@ -109,7 +109,7 @@ async def logs(_, message: Message):
 
 @Client.on_message(command(["sudos", "sudolist"]))
 async def sudolist(_, message: Message):
-    m = message.reply_text(
+    m = await message.reply_text(
         "<code>Gathering intel..</code>", parse_mode="html"
     )
     true_dev = list(set(SUDO_USERS) - {OWNER_ID})
@@ -121,4 +121,4 @@ async def sudolist(_, message: Message):
             user.first_name if not user.mention else user.mention
         )
         reply += f"• {user}\n"
-    m.edit_text(reply, parse_mode="html")
+    await m.edit_text(reply, parse_mode="html")
