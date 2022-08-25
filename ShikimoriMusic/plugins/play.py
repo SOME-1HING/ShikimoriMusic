@@ -97,6 +97,18 @@ def changeImageSize(maxWidth, maxHeight, image):
     newImage = image.resize((newWidth, newHeight))
     return newImage
 
+def mask_circle_transparent(pil_img, blur_radius, offset=0):
+    offset = blur_radius * 2 + offset
+    mask = Image.new("L", pil_img.size, 0)
+    draw = ImageDraw.Draw(mask)
+    draw.ellipse((offset, offset, pil_img.size[0] - offset, pil_img.size[1] - offset), fill=255)
+    mask = mask.filter(ImageFilter.GaussianBlur(blur_radius))
+
+    result = pil_img.copy()
+    result.putalpha(mask)
+
+    return result
+
 async def generate_cover(requested_by, title, views, duration, thumbnail):
     async with aiohttp.ClientSession() as session:
         async with session.get(thumbnail) as resp:
@@ -111,8 +123,10 @@ async def generate_cover(requested_by, title, views, duration, thumbnail):
     image11 = changeImageSize(1280, 720, thumb)
         
     image3 = image11.resize((350,350))
-    
-    image1.paste(image3, (805,180))
+
+    im_thumb = mask_circle_transparent(image3, 4)
+        
+    image1.paste(im_thumb, (805,180))
 
     # fonts
     font3 = ImageFont.truetype(r'etc/robot.otf', 40)
