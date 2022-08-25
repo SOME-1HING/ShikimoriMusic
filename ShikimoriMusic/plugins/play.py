@@ -108,8 +108,6 @@ async def generate_cover(requested_by, title, views, duration, thumbnail):
     thumb = Image.open(f"./background.png")
     image = Image.open("etc/img.jpg")
     black = Image.open("etc/black.jpg")
-    img = Image.open("etc/robot.png")
-    image5 = changeImageSize(1280, 720, img)
     image1 = changeImageSize(1280, 720, image)
     image11 = changeImageSize(1280, 720, thumb)
     image2 = Image.blend(image1,black,0.6)
@@ -118,8 +116,7 @@ async def generate_cover(requested_by, title, views, duration, thumbnail):
     image3 = image3.resize((500,500))
     
 
-    image2.paste(image3, (100,115))
-    image2.paste(image5, mask = image5)
+    image2.paste(image3, (800,210))
 
     # fonts
     font1 = ImageFont.truetype(r'etc/robot.otf', 30)
@@ -131,17 +128,17 @@ async def generate_cover(requested_by, title, views, duration, thumbnail):
 
     # title
     title1 = truncate(title)
-    image4.text((670, 280), text=title1[0], fill="white", font = font3, align ="left") 
-    image4.text((670, 332), text=title1[1], fill="white", font = font3, align ="left") 
+    image4.text((175, 225), text=title1[0], fill="white", font = font3, align ="left") 
+    image4.text((175, 265), text=title1[1], fill="white", font = font3, align ="left") 
 
     # description
     views = f"Views : {views}"
     duration = f"Duration : {duration} minutes"
     channel = f"Request : {BOT_NAME} Bot"
 
-    image4.text((670, 410), text=views, fill="white", font = font4, align ="left") 
-    image4.text((670, 460), text=duration, fill="white", font = font4, align ="left") 
-    image4.text((670, 510), text=channel, fill="white", font = font4, align ="left")
+    image4.text((175, 410), text=views, fill="white", font = font4, align ="left") 
+    image4.text((175, 460), text=duration, fill="white", font = font4, align ="left") 
+    image4.text((175, 510), text=channel, fill="white", font = font4, align ="left")
 
     
     image2.save(f"final.png")
