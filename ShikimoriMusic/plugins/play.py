@@ -106,9 +106,11 @@ async def generate_cover(requested_by, title, views, duration, thumbnail):
                 await f.close()
 
     image = Image.open("etc/img.jpg")
+    thumb = Image.open(f"./background.png")
     image1 = changeImageSize(1280, 720, image)
+    image11 = changeImageSize(1280, 720, thumb)
         
-    image3 = image3.resize((350,350))
+    image3 = image11.resize((350,350))
     
     image1.paste(image3, (805,180))
 
