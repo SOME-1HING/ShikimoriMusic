@@ -65,7 +65,7 @@ async def stats(_, message: Message):
         + f"**╰┈➤ Served Users:** `{len(get_served_users())}` \n✦"
         + f"**╰┈➤ Active VC:** `{len(get_active_chats())}`\n"
 
-        + f"\n\n    [✦ ꜱᴜᴘᴘᴏʀᴛ ✦](https://t.me/{SUPPORT_CHAT})"
-        + "     ┗━✦❘༻           ༺❘✦━━┛",
+        + f"\n\n    [✦ ꜱᴜᴘᴘᴏʀᴛ ✦](https://t.me/{SUPPORT_CHAT})\n"
+        + " ┗━━✦❘༻           ༺❘✦━━┛",
         parse_mode="markdown",
     )
