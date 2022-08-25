@@ -97,8 +97,6 @@ def changeImageSize(maxWidth, maxHeight, image):
     newImage = image.resize((newWidth, newHeight))
     return newImage
 
-IMG = "https://telegra.ph/file/74bd5aba56c50f5abddd7.jpg"
-
 async def generate_cover(requested_by, title, views, duration, thumbnail):
     async with aiohttp.ClientSession() as session:
         async with session.get(thumbnail) as resp:
@@ -107,7 +105,7 @@ async def generate_cover(requested_by, title, views, duration, thumbnail):
                 await f.write(await resp.read())
                 await f.close()
 
-    image = Image.open(IMG)
+    image = Image.open("etc/img.jpg")
     black = Image.open("etc/black.jpg")
     img = Image.open("etc/robot.png")
     image5 = changeImageSize(1280, 720, img)
