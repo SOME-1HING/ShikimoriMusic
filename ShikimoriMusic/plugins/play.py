@@ -105,26 +105,18 @@ async def generate_cover(requested_by, title, views, duration, thumbnail):
                 await f.write(await resp.read())
                 await f.close()
 
-    thumb = Image.open(f"./background.png")
     image = Image.open("etc/img.jpg")
-    black = Image.open("etc/black.jpg")
     image1 = changeImageSize(1280, 720, image)
-    image11 = changeImageSize(1280, 720, thumb)
-    image2 = Image.blend(image1,black,0.6)
-
-    image3 = image11.crop((280,0,1000,720))
+        
     image3 = image3.resize((350,350))
     
-
-    image2.paste(image3, (800,210))
+    image1.paste(image3, (805,180))
 
     # fonts
-    font1 = ImageFont.truetype(r'etc/robot.otf', 30)
-    font2 = ImageFont.truetype(r'etc/robot.otf', 60)
-    font3 = ImageFont.truetype(r'etc/robot.otf', 49)
+    font3 = ImageFont.truetype(r'etc/robot.otf', 40)
     font4 = ImageFont.truetype(r'etc/Mukta-ExtraBold.ttf', 35)
 
-    image4 = ImageDraw.Draw(image2)
+    image4 = ImageDraw.Draw(image1)
 
     # title
     title1 = truncate(title)
@@ -140,8 +132,7 @@ async def generate_cover(requested_by, title, views, duration, thumbnail):
     image4.text((175, 460), text=duration, fill="white", font = font4, align ="left") 
     image4.text((175, 510), text=channel, fill="white", font = font4, align ="left")
 
-    
-    image2.save(f"final.png")
+    image1.save(f"final.png")
     os.remove(f"background.png")
     final = f"temp.png"
     return final
