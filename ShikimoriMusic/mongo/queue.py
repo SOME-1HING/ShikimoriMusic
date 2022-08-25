@@ -4,11 +4,8 @@ pytgdb = db.pytg
 admindb = db.admin
 
 def get_active_chats() -> list:
-    chats = pytgdb.find({"chat_id": {"$lt": 0}})
-    if not chats:
-        return []
     chats_list = []
-    for chat in chats.to_list(length=1000000000):
+    for chat in pytgdb.find({"chat_id": {"$lt": 0}}):
         chats_list.append(chat)
     return chats_list
 
