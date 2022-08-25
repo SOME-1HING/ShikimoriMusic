@@ -58,15 +58,10 @@ async def stats(_, message: Message):
     status += "*➢ Uptime:* " + str(botuptime) + "\n"
 
     await message.reply_text(
-        (
-            (
-                (
-                    "*Bot statistics*:\n"
-                    + f"**Served Chats:** {len(get_served_chats())}\n" 
-                    + f"**Served Users:** {len(get_served_users())} "
-                )
-                + f"\n\n✦ [Support](https://t.me/{SUPPORT_CHAT})"
-            )
-        ),
+        status
+        + "**Bot statistics**:\n"
+        + f"**Served Chats:** {len(get_served_chats())}\n" 
+        + f"**Served Users:** {len(get_served_users())} "
+        + f"\n\n✦ [Support](https://t.me/{SUPPORT_CHAT})",
         parse_mode="markdown",
     )
