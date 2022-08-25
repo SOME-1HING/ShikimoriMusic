@@ -105,12 +105,13 @@ async def generate_cover(requested_by, title, views, duration, thumbnail):
                 await f.write(await resp.read())
                 await f.close()
 
+    thumb = Image.open(f"./background.png")
     image = Image.open("etc/img.jpg")
     black = Image.open("etc/black.jpg")
     img = Image.open("etc/robot.png")
     image5 = changeImageSize(1280, 720, img)
     image1 = changeImageSize(1280, 720, image)
-    image11 = changeImageSize(1280, 720, image)
+    image11 = changeImageSize(1280, 720, thumb)
     image2 = Image.blend(image1,black,0.6)
 
     image3 = image11.crop((280,0,1000,720))
