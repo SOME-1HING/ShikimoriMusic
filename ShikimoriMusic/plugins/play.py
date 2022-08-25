@@ -1,4 +1,5 @@
 import aiofiles
+from ShikimoriMusic.mongo.chats import add_served_chat, is_served_chat
 import ffmpeg
 import asyncio
 import os
@@ -173,6 +174,11 @@ async def play(_, message: Message):
     global que
     global useer
     user_id = message.from_user.id
+    chid = message.chat.id 
+
+    if not is_served_chat(chid):
+        add_served_chat(chid)
+
     if message.sender_chat:
         return await message.reply_text(
             " __You're an **Anonymous Admin**!__\n│\n╰ Revert back to user account from admin rights."
@@ -187,7 +193,6 @@ async def play(_, message: Message):
         return
     lel = await message.reply("**ᴘʀᴏᴄᴇssɪɴɢ.....**")
 
-    chid = message.chat.id
 
     c = await pbot.get_chat_member(message.chat.id, BOT_ID)
     if c.status != "administrator":
