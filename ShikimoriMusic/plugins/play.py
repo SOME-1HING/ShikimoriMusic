@@ -198,8 +198,8 @@ async def play(_, message: Message):
 
     c = await pbot.get_chat_member(message.chat.id, BOT_ID)
     if c.status != "administrator":
-        await lel.edit_media(error_img,
-            caption =f"**ᴘʀᴏᴍᴏᴛᴇ ᴍᴇ ᴀs ᴀ ᴀᴅᴍɪɴ !!**"
+        await lel.edit_media(error_img)
+        await lel.edit_text(f"**ᴘʀᴏᴍᴏᴛᴇ ᴍᴇ ᴀs ᴀ ᴀᴅᴍɪɴ !!**"
         )
         return
     if not c.can_manage_voice_chats:
@@ -416,7 +416,8 @@ async def play(_, message: Message):
             return await lel.edit_media(
                 error_img, caption= "❌ ᴀʟsᴏ ɢɪᴠᴇ ᴀ sᴏɴɢ ɴᴀᴍᴇ ᴡɪᴛʜ ᴜsɪɴɢ ᴘʟᴀʏ ᴄᴏᴍᴍᴀɴᴅ !!\n\nғᴏʀ ᴇxᴀᴍᴘʟᴇ :\n/play 295"
             )
-        await lel.edit_media(loading_img, caption= "**ғɪɴᴅɪɴɢ 🔎 sᴇʀᴠᴇʀ !!**")
+        await lel.edit_media(loading_img)
+        await lel.edit_media("**ғɪɴᴅɪɴɢ 🔎 sᴇʀᴠᴇʀ !!**")
         query = message.text.split(None, 1)[1]
         # print(query)
         await lel.edit_media(loading_img, caption= "**ɢᴇᴛᴛɪɴɢ..... ʀᴇsᴘᴏɴsᴇ.....**")
