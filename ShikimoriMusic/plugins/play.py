@@ -193,7 +193,7 @@ async def play(_, message: Message):
       
 
         return
-    lel = await message.send_animation(chid, loading_img,caption="**ᴘʀᴏᴄᴇssɪɴɢ.....**")
+    lel = await pbot.send_animation(chid, loading_img,caption="**ᴘʀᴏᴄᴇssɪɴɢ.....**")
 
 
     c = await pbot.get_chat_member(message.chat.id, BOT_ID)
@@ -532,7 +532,7 @@ async def play(_, message: Message):
 
     if is_active_chat(message.chat.id):
         position = await queues.put(message.chat.id, file=file_path)
-        await message.send_photo(
+        await pbot.send_photo(
             chid,
             photo="final.png",
             reply_markup=keyboard,
@@ -559,7 +559,7 @@ async def play(_, message: Message):
 
         music_on(message.chat.id)
         add_active_chat(message.chat.id)
-        await message.send_photo(
+        await pbot.send_photo(
             chid,
             photo="final.png",
             reply_markup=keyboard,
