@@ -124,8 +124,10 @@ async def generate_cover(requested_by, title, views, duration, thumbnail):
     image3 = image11.resize((350,350))
 
     im_thumb = mask_circle_solid(image3, (0, 0, 0), 4)
+    im_thumb1 = mask_circle_solid(image11, (0, 0, 0), 4)
         
     image1.paste(im_thumb, (805,180))
+    image11.paste(im_thumb1, (805,180))
 
     # fonts
     font3 = ImageFont.truetype(r'etc/robot.otf', 40)
