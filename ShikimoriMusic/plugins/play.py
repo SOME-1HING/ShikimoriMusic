@@ -535,13 +535,13 @@ async def play(_, message: Message):
                         print(
                             f"[{url_suffix}] Downloaded {percentage} at a speed of {speed} | ETA: {eta} seconds"
                         )
+                lel.delete()
             if d["status"] == "finished":
                 try:
                     taken = d["_elapsed_str"]
                 except Exception as e:
                     taken = "00:00"
                 size = d["_total_bytes_str"]
-                lel.delete()
                 lel = pbot.send_animation(chid,loading_img, caption=  f"**ᴅᴏᴡɴʟᴏᴀᴅ ғɪɴɪsʜ !!**\n\n**{title[:50]}...\n\n**ғɪʟᴇ sɪᴢᴇ : {size}**\n■■■■■■■■■■ `100%`\n**ᴛɪᴍᴇ : {taken} sec**\n\n<b> ғғᴍᴘᴇᴊ ʀᴜɴɴɪɴɢ....</b>"
                 )
                 print(f"[{url_suffix}] Downloaded| Elapsed: {taken} seconds")
