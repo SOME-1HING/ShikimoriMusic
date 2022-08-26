@@ -592,7 +592,7 @@ Use the given buttons for more 📍""",
 async def closed(_, query: CallbackQuery):
     from_user = query.from_user
     permissions = await member_permissions(query.message.chat.id, from_user.id)
-    permission = "can_restrict_members"
+    permission = "can_delete_messages"
     if permission not in permissions:
         return await query.answer(
             "You don't have enough permissions to perform this action.",
