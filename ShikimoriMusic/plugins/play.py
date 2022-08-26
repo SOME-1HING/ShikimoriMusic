@@ -51,6 +51,9 @@ DISABLED_GROUPS = []
 useer = "NaN"
 flex = {}
 
+error_img = "https://telegra.ph/file/71f03e109851d4ced2e38.mp4"
+loading_img = "https://telegra.ph/file/18e11c12e62c846ef0572.mp4"
+down_img = "https://telegra.ph/file/1fa311f95574d532395a2.mp4"
 
 def transcode(filename):
     ffmpeg.input(filename).output(
@@ -190,36 +193,36 @@ async def play(_, message: Message):
       
 
         return
-    lel = await message.reply("**ᴘʀᴏᴄᴇssɪɴɢ.....**")
+    lel = await message.send_animation(chid, loading_img,caption="**ᴘʀᴏᴄᴇssɪɴɢ.....**")
 
 
     c = await pbot.get_chat_member(message.chat.id, BOT_ID)
     if c.status != "administrator":
-        await lel.edit(
-            f"**ᴘʀᴏᴍᴏᴛᴇ ᴍᴇ ᴀs ᴀ ᴀᴅᴍɪɴ !!**"
+        await lel.edit_media(error_img,
+            caption =f"**ᴘʀᴏᴍᴏᴛᴇ ᴍᴇ ᴀs ᴀ ᴀᴅᴍɪɴ !!**"
         )
         return
     if not c.can_manage_voice_chats:
-        await lel.edit(
-            "**ᴍᴀɴᴀɢᴇ-ᴠᴏɪᴄᴇ-ᴄʜᴀᴛ : ᴘᴏᴡᴇʀ ❌**"
+        await lel.edit_media(
+            error_img, caption="**ᴍᴀɴᴀɢᴇ-ᴠᴏɪᴄᴇ-ᴄʜᴀᴛ : ᴘᴏᴡᴇʀ ❌**"
         )
         return
     if not c.can_delete_messages:
-        await lel.edit(
-            "**ᴅᴇʟᴇᴛᴇ-ᴍᴇssᴀɢᴇ : ᴘᴏᴡᴇʀ ❌**"
+        await lel.edit_media(
+            error_img, caption="**ᴅᴇʟᴇᴛᴇ-ᴍᴇssᴀɢᴇ : ᴘᴏᴡᴇʀ ❌**"
         )
         return
     if not c.can_invite_users:
-        await lel.edit(
-            "**ɪɴᴠɪᴛᴇ-ᴜsᴇʀs : ᴘᴏᴡᴇʀ ❌**"
+        await lel.edit_media(
+            error_img, caption="**ɪɴᴠɪᴛᴇ-ᴜsᴇʀs : ᴘᴏᴡᴇʀ ❌**"
         )
         return
 
     try:
         b = await pbot.get_chat_member(message.chat.id, ASS_ID)
         if b.status == "kicked":
-            await message.reply_text(
-                f"🔴 {ASS_NAME} (@{ASS_USERNAME}) is banned in your chat **{message.chat.title}**\n\nUnban it first to use music"
+            await message.reply_animation(
+                error_img, caption=f"🔴 {ASS_NAME} (@{ASS_USERNAME}) is banned in your chat **{message.chat.title}**\n\nUnban it first to use music"
             )
             return
     except UserNotParticipant:
@@ -231,8 +234,8 @@ async def play(_, message: Message):
                 )
                 remove_active_chat(chat_id)
             except Exception as e:
-                await message.reply_text(
-                    f"**@{ASS_USERNAME} failed to join** Add @{ASS_USERNAME} manually in your group.\n\n**Reason**:{e}"
+                await message.reply_animation(
+                    error_img, caption=f"**@{ASS_USERNAME} failed to join** Add @{ASS_USERNAME} manually in your group.\n\n**Reason**:{e}"
                 )
                 return
         else:
@@ -249,8 +252,8 @@ async def play(_, message: Message):
             except UserAlreadyParticipant:
                 pass
             except Exception as e:
-                return await message.reply_text(
-                    f"**@{ASS_USERNAME} failed to join** Add @{ASS_USERNAME} manually in your group.\n\n**Reason**:{e}"
+                return await message.reply_animation(
+                    error_img, caption=f"**@{ASS_USERNAME} failed to join** Add @{ASS_USERNAME} manually in your group.\n\n**Reason**:{e}"
                 )
 
     await message.delete()
@@ -270,7 +273,7 @@ async def play(_, message: Message):
         file_name = get_file_name(audio)
         url = f"https://t.me/{UPDATE}"
         title = audio.title
-        thumb_name = "https://telegra.ph/file/a7adee6cf365d74734c5d.png"
+        thumb_name = "https://telegra.ph/file/c83049a0b19b9a1e28b1c.jpg"
         thumbnail = thumb_name
         duration = round(audio.duration / 60)
         views = "Locally added"
@@ -331,7 +334,7 @@ async def play(_, message: Message):
 
         except Exception as e:
             title = "NaN"
-            thumb_name = "https://telegra.ph/file/a7adee6cf365d74734c5d.png"
+            thumb_name = "https://telegra.ph/file/c83049a0b19b9a1e28b1c.jpg"
             duration = "NaN"
             views = "NaN"
             keyboard = InlineKeyboardMarkup(
@@ -363,8 +366,8 @@ async def play(_, message: Message):
                     flex[str(bytesx)] += 1
                     try:
                         if eta > 2:
-                            lel.edit(
-                                f"ᴅᴏᴡɴʟᴏᴀᴅɪɴɢ {title[:50]}\n\n**ғɪʟᴇ sɪᴢᴇ :** {size}\n**ᴘʀᴏɢʀᴇss :** {percentage}\n**sᴘᴇᴇᴅ :** {speed}\n**ᴇᴛᴀ :** {eta} sec"
+                            lel.edit_media(
+                                loading_img, caption= f"ᴅᴏᴡɴʟᴏᴀᴅɪɴɢ {title[:50]}\n\n**ғɪʟᴇ sɪᴢᴇ :** {size}\n**ᴘʀᴏɢʀᴇss :** {percentage}\n**sᴘᴇᴇᴅ :** {speed}\n**ᴇᴛᴀ :** {eta} sec"
                             )
                     except Exception as e:
                         pass
@@ -372,8 +375,7 @@ async def play(_, message: Message):
                     if flex[str(bytesx)] == 2:
                         flex[str(bytesx)] += 1
                         if eta > 2:
-                            lel.edit(photo = "https://telegra.ph/file/1fa311f95574d532395a2.mp4",
-                                caption =f"**ᴅᴏᴡɴʟᴏᴀᴅɪɴɢ :** {title[:50]}..\n\n**ғɪʟᴇ sɪᴢᴇ :** {size}\n**ᴘʀᴏɢʀᴇss :** {percentage}\n**sᴘᴇᴇᴅ :** {speed}\n**ᴇᴛᴀ :** {eta} sec"
+                            lel.edit_media(loading_img, caption= f"**ᴅᴏᴡɴʟᴏᴀᴅɪɴɢ :** {title[:50]}..\n\n**ғɪʟᴇ sɪᴢᴇ :** {size}\n**ᴘʀᴏɢʀᴇss :** {percentage}\n**sᴘᴇᴇᴅ :** {speed}\n**ᴇᴛᴀ :** {eta} sec"
                             )
                         print(
                             f"[{url_suffix}] Downloaded {percentage} at a speed of {speed} | ETA: {eta} seconds"
@@ -382,8 +384,7 @@ async def play(_, message: Message):
                     if flex[str(bytesx)] == 3:
                         flex[str(bytesx)] += 1
                         if eta > 2:
-                            lel.edit(photo = "https://telegra.ph/file/1fa311f95574d532395a2.mp4",
-                                caption = f"**ᴅᴏᴡɴʟᴏᴀᴅɪɴɢ** {title[:50]}...\n\n**ғɪʟᴇ sɪᴢᴇ :** {size}\n**ᴘʀᴏɢʀᴇss :** {percentage}\n**sᴘᴇᴇᴅ :** {speed}\n**ᴇᴛᴀ :** {eta} sec"
+                            lel.edit_media(loading_img, caption= f"**ᴅᴏᴡɴʟᴏᴀᴅɪɴɢ** {title[:50]}...\n\n**ғɪʟᴇ sɪᴢᴇ :** {size}\n**ᴘʀᴏɢʀᴇss :** {percentage}\n**sᴘᴇᴇᴅ :** {speed}\n**ᴇᴛᴀ :** {eta} sec"
                             )
                         print(
                             f"[{url_suffix}] Downloaded {percentage} at a speed of {speed} | ETA: {eta} seconds"
@@ -392,8 +393,7 @@ async def play(_, message: Message):
                     if flex[str(bytesx)] == 4:
                         flex[str(bytesx)] += 1
                         if eta > 2:
-                            lel.edit(photo = "https://telegra.ph/file/1fa311f95574d532395a2.mp4",
-                                caption = f"**ᴅᴏᴡɴʟᴏᴀᴅɪɴɢ :** {title[:50]}....\n\n**ғɪʟᴇ sɪᴢᴇ :** {size}\n**ᴘʀᴏɢʀᴇss :** {percentage}\n**sᴘᴇᴇᴅ :** {speed}\n**ᴇᴛᴀ :** {eta} sec"
+                            lel.edit_media(loading_img, caption=  f"**ᴅᴏᴡɴʟᴏᴀᴅɪɴɢ :** {title[:50]}....\n\n**ғɪʟᴇ sɪᴢᴇ :** {size}\n**ᴘʀᴏɢʀᴇss :** {percentage}\n**sᴘᴇᴇᴅ :** {speed}\n**ᴇᴛᴀ :** {eta} sec"
                             )
                         print(
                             f"[{url_suffix}] Downloaded {percentage} at a speed of {speed} | ETA: {eta} seconds"
@@ -404,8 +404,7 @@ async def play(_, message: Message):
                 except Exception as e:
                     taken = "00:00"
                 size = d["_total_bytes_str"]
-                lel.edit(photo = "https://telegra.ph/file/1fa311f95574d532395a2.mp4",
-                        caption = f"**ᴅᴏᴡɴʟᴏᴀᴅɪɴɢ :** {title[:50]}.....\n\n**ғɪʟᴇ sɪᴢᴇ :** {size}\n**ᴛɪᴍᴇ :** {taken} sec\n\n**ᴄᴏɴᴠᴇʀᴛɪɴɢ ғɪʟᴇ : **[__FFmpeg processing__]"
+                lel.edit_media(loading_img, caption=  f"**ᴅᴏᴡɴʟᴏᴀᴅɪɴɢ :** {title[:50]}.....\n\n**ғɪʟᴇ sɪᴢᴇ :** {size}\n**ᴛɪᴍᴇ :** {taken} sec\n\n**ᴄᴏɴᴠᴇʀᴛɪɴɢ ғɪʟᴇ : **[__FFmpeg processing__]"
                 )
                 print(f"[{url_suffix}] Downloaded| Elapsed: {taken} seconds")
 
@@ -414,13 +413,13 @@ async def play(_, message: Message):
         file_path = await cconvert(x)
     else:
         if len(message.command) < 2:
-            return await lel.edit(
-                "❌ ᴀʟsᴏ ɢɪᴠᴇ ᴀ sᴏɴɢ ɴᴀᴍᴇ ᴡɪᴛʜ ᴜsɪɴɢ ᴘʟᴀʏ ᴄᴏᴍᴍᴀɴᴅ !!\n\nғᴏʀ ᴇxᴀᴍᴘʟᴇ :\n/play 295"
+            return await lel.edit_media(
+                error_img, caption= "❌ ᴀʟsᴏ ɢɪᴠᴇ ᴀ sᴏɴɢ ɴᴀᴍᴇ ᴡɪᴛʜ ᴜsɪɴɢ ᴘʟᴀʏ ᴄᴏᴍᴍᴀɴᴅ !!\n\nғᴏʀ ᴇxᴀᴍᴘʟᴇ :\n/play 295"
             )
-        await lel.edit("**ғɪɴᴅɪɴɢ 🔎 sᴇʀᴠᴇʀ !!**")
+        await lel.edit_media(loading_img, caption= "**ғɪɴᴅɪɴɢ 🔎 sᴇʀᴠᴇʀ !!**")
         query = message.text.split(None, 1)[1]
         # print(query)
-        await lel.edit("**ɢᴇᴛᴛɪɴɢ..... ʀᴇsᴘᴏɴsᴇ.....**")
+        await lel.edit_media(loading_img, caption= "**ɢᴇᴛᴛɪɴɢ..... ʀᴇsᴘᴏɴsᴇ.....**")
         try:
             results = YoutubeSearch(query, max_results=5).to_dict()
             url = f"https://youtube.com{results[0]['url_suffix']}"
@@ -442,8 +441,8 @@ async def play(_, message: Message):
                 secmul *= 60
 
         except Exception as e:
-            await lel.edit(
-                "• **Song not found**\n\nwrite name correctly."
+            await lel.edit_media(
+                error_img, caption= "• **Song not found**\n\nwrite name correctly."
             )
             print(str(e))
             return
@@ -463,7 +462,7 @@ async def play(_, message: Message):
 
         if (dur / 60) > DURATION_LIMIT:
             await lel.edit(
-                f"💡 Videos longer than {DURATION_LIMIT} minutes aren't allowed to play!"
+                error_img, caption= f"💡 Videos longer than {DURATION_LIMIT} minutes aren't allowed to play!"
             )
             return
         requested_by = message.from_user.first_name
@@ -486,8 +485,7 @@ async def play(_, message: Message):
                     flex[str(bytesx)] += 1
                     try:
                         if eta > 2:
-                            lel.edit(
-                                f"**ᴄᴏɴɴᴇᴄᴛɪɴɢ 🔄**"
+                            lel.edit_media(loading_img, caption=  f"**ᴄᴏɴɴᴇᴄᴛɪɴɢ 🔄**"
                             )
                     except Exception as e:
                         pass
@@ -495,8 +493,7 @@ async def play(_, message: Message):
                     if flex[str(bytesx)] == 2:
                         flex[str(bytesx)] += 1
                         if eta > 2:
-                            lel.edit(
-                                f"**ᴘʀᴏᴄᴇssɪɴɢ.....**"
+                            lel.edit_media(loading_img, caption=  f"**ᴘʀᴏᴄᴇssɪɴɢ.....**"
                             )
                         print(
                             f"[{url_suffix}] Downloaded {percentage} at a speed of {speed} | ETA: {eta} seconds"
@@ -505,8 +502,7 @@ async def play(_, message: Message):
                     if flex[str(bytesx)] == 3:
                         flex[str(bytesx)] += 1
                         if eta > 2:
-                            lel.edit(
-                                f"**ᴄᴏɴɴᴇᴄᴛɪɴɢ 🔄**"
+                            lel.edit_media(loading_img, caption=  f"**ᴄᴏɴɴᴇᴄᴛɪɴɢ 🔄**"
                             )
                         print(
                             f"[{url_suffix}] Downloaded {percentage} at a speed of {speed} | ETA: {eta} seconds"
@@ -515,8 +511,7 @@ async def play(_, message: Message):
                     if flex[str(bytesx)] == 4:
                         flex[str(bytesx)] += 1
                         if eta > 2:
-                            lel.edit(
-                                f"**ᴘʀᴏᴄᴇssɪɴɢ.....**"
+                            lel.edit_media(loading_img, caption=  f"**ᴘʀᴏᴄᴇssɪɴɢ.....**"
                             )
                         print(
                             f"[{url_suffix}] Downloaded {percentage} at a speed of {speed} | ETA: {eta} seconds"
@@ -527,8 +522,7 @@ async def play(_, message: Message):
                 except Exception as e:
                     taken = "00:00"
                 size = d["_total_bytes_str"]
-                lel.edit(photo = "https://telegra.ph/file/1fa311f95574d532395a2.mp4",
-                        caption = f"**ᴅᴏᴡɴʟᴏᴀᴅ ғɪɴɪsʜ !!**\n\n**{title[:50]}...\n\n**ғɪʟᴇ sɪᴢᴇ : {size}**\n■■■■■■■■■■ `100%`\n**ᴛɪᴍᴇ : {taken} sec**\n\n<b> ғғᴍᴘᴇᴊ ʀᴜɴɴɪɴɢ....</b>"
+                lel.edit_media(loading_img, caption=  f"**ᴅᴏᴡɴʟᴏᴀᴅ ғɪɴɪsʜ !!**\n\n**{title[:50]}...\n\n**ғɪʟᴇ sɪᴢᴇ : {size}**\n■■■■■■■■■■ `100%`\n**ᴛɪᴍᴇ : {taken} sec**\n\n<b> ғғᴍᴘᴇᴊ ʀᴜɴɴɪɴɢ....</b>"
                 )
                 print(f"[{url_suffix}] Downloaded| Elapsed: {taken} seconds")
 
@@ -538,7 +532,8 @@ async def play(_, message: Message):
 
     if is_active_chat(message.chat.id):
         position = await queues.put(message.chat.id, file=file_path)
-        await message.reply_photo(
+        await message.send_photo(
+            chid,
             photo="final.png",
             reply_markup=keyboard,
             caption="**[ᴘʟᴀʏɪɴɢ ᴍᴜsɪᴄ ᴠɪᴀ ʏᴏᴜᴛᴜʙᴇ 📡]({})**\n\n• ᴜsᴇʀ : {}\n• ɢʀᴏᴜᴘ : [{}](https://t.me/{})".format(
@@ -557,14 +552,15 @@ async def play(_, message: Message):
                 stream_type=StreamType().local_stream,
             )
         except Exception:
-            return await lel.edit(
-                "Error Joining Voice Chat. Make sure Voice Chat is Enabled.\n\n If YES, then make sure Music Bots Assistant is not banned in your group or available in your group!"
+            return await lel.edit_media(
+                loading_img, caption= "Error Joining Voice Chat. Make sure Voice Chat is Enabled.\n\n If YES, then make sure Music Bots Assistant is not banned in your group or available in your group!"
             )
 
 
         music_on(message.chat.id)
         add_active_chat(message.chat.id)
-        await message.reply_photo(
+        await message.send_photo(
+            chid,
             photo="final.png",
             reply_markup=keyboard,
             caption="**[ᴘʟᴀʏɪɴɢ ᴍᴜsɪᴄ ᴠɪᴀ ʏᴏᴜᴛᴜʙᴇ 📡]({})**\n\n• ᴜsᴇʀ : {}\n• ɢʀᴏᴜᴘ : [{}](https://t.me/{})".format(
