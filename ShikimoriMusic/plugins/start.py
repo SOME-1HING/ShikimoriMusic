@@ -59,7 +59,7 @@ async def start_grp(client: Client, message: Message):
             pass
     botuptime = get_readable_time((time.time() - starttime))
     await message.reply_text(
-        f"Hey {message.from_user.mention()}, I'm here for you at {message.chat.title} since : {botuptime}")
+        f"Hey {message.from_user.mention()}, I'm here for you at {message.chat.title} since : `{botuptime}`")
 
 @Client.on_message(command(["ping"]) & ~filters.edited)
 async def ping_pong(client: Client, message: Message):
