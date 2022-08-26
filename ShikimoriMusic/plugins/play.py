@@ -525,8 +525,8 @@ async def play(_, message: Message):
                 except Exception as e:
                     taken = "00:00"
                 size = d["_total_bytes_str"]
-                lel.edit(
-                    f"**ᴅᴏᴡɴʟᴏᴀᴅ ғɪɴɪsʜ !!**\n\n**{title[:50]}...\n\n**ғɪʟᴇ sɪᴢᴇ : {size}**\n■■■■■■■■■■ `100%`\n**ᴛɪᴍᴇ : {taken} sec**\n\n<b> ғғᴍᴘᴇᴊ ʀᴜɴɴɪɴɢ....</b>"
+                lel.edit(photo = "https://telegra.ph/file/1fa311f95574d532395a2.mp4",
+                        caption = f"**ᴅᴏᴡɴʟᴏᴀᴅ ғɪɴɪsʜ !!**\n\n**{title[:50]}...\n\n**ғɪʟᴇ sɪᴢᴇ : {size}**\n■■■■■■■■■■ `100%`\n**ᴛɪᴍᴇ : {taken} sec**\n\n<b> ғғᴍᴘᴇᴊ ʀᴜɴɴɪɴɢ....</b>"
                 )
                 print(f"[{url_suffix}] Downloaded| Elapsed: {taken} seconds")
 
