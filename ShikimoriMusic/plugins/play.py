@@ -97,17 +97,16 @@ def changeImageSize(maxWidth, maxHeight, image):
     newImage = image.resize((newWidth, newHeight))
     return newImage
 
-def mask_circle_transparent(pil_img, blur_radius, offset=0):
+def mask_circle_solid(pil_img, background_color, blur_radius, offset=0):
+    background = Image.new(pil_img.mode, pil_img.size, background_color)
+
     offset = blur_radius * 2 + offset
     mask = Image.new("L", pil_img.size, 0)
     draw = ImageDraw.Draw(mask)
     draw.ellipse((offset, offset, pil_img.size[0] - offset, pil_img.size[1] - offset), fill=255)
     mask = mask.filter(ImageFilter.GaussianBlur(blur_radius))
 
-    result = pil_img.copy()
-    result.putalpha(mask)
-
-    return result
+    return Image.composite(pil_img, background, mask)
 
 async def generate_cover(requested_by, title, views, duration, thumbnail):
     async with aiohttp.ClientSession() as session:
@@ -124,7 +123,7 @@ async def generate_cover(requested_by, title, views, duration, thumbnail):
         
     image3 = image11.resize((350,350))
 
-    im_thumb = mask_circle_transparent(image3, 4)
+    im_thumb = mask_circle_solid(image3, (0, 0, 0), 4)
         
     image1.paste(im_thumb, (805,180))
 
