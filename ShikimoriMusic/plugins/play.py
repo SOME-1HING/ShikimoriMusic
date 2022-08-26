@@ -463,18 +463,6 @@ async def play(_, message: Message):
             print(str(e))
             return
 
-        keyboard = InlineKeyboardMarkup(
-    [
-        
-       [
-            InlineKeyboardButton("🎥 ᴡᴀᴛᴄʜ", url="https://youtube.com"),
-            InlineKeyboardButton("📨 sᴜᴘᴘᴏʀᴛ", url=f"https://t.me/{SUPPORT_CHAT}"),
-        ],[
-            InlineKeyboardButton("🚫 ᴄʟᴏsᴇ", callback_data="cls"),
-        ],
-        
-    ]
-)
 
         if (dur / 60) > DURATION_LIMIT:
             await asyncio.sleep(2)
@@ -555,6 +543,18 @@ async def play(_, message: Message):
         x = await loop.run_in_executor(None, download, url, my_hook)
         file_path = await cconvert(x)
 
+        keyboard = InlineKeyboardMarkup(
+    [
+        
+       [
+            InlineKeyboardButton("🎥 ᴡᴀᴛᴄʜ", url=f"{url}"),
+            InlineKeyboardButton("📨 sᴜᴘᴘᴏʀᴛ", url=f"https://t.me/{SUPPORT_CHAT}"),
+        ],[
+            InlineKeyboardButton("🚫 ᴄʟᴏsᴇ", callback_data="cls"),
+        ],
+        
+    ]
+)
     if is_active_chat(message.chat.id):
         position = await queues.put(message.chat.id, file=file_path)
         await asyncio.sleep(2)
