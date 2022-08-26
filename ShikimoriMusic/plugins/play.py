@@ -482,6 +482,7 @@ async def play(_, message: Message):
         requested_by = message.from_user.first_name
         await generate_cover(requested_by, title, views, duration, thumbnail)
         await lel.delete()
+        lel = await message.reply_text("hm")
 
         def my_hook(d):
             if d["status"] == "downloading":
@@ -500,8 +501,8 @@ async def play(_, message: Message):
                     flex[str(bytesx)] += 1
                     try:
                         if eta > 2:
-                            
-                            lel = pbot.send_animation(chid,loading_img, caption=  f"**ᴄᴏɴɴᴇᴄᴛɪɴɢ 🔄**"
+                            lel.edit(
+                                f"**ᴄᴏɴɴᴇᴄᴛɪɴɢ 🔄**"
                             )
                     except Exception as e:
                         pass
@@ -509,8 +510,8 @@ async def play(_, message: Message):
                     if flex[str(bytesx)] == 2:
                         flex[str(bytesx)] += 1
                         if eta > 2:
-                            
-                            lel = pbot.send_animation(chid,loading_img, caption=  f"**ᴘʀᴏᴄᴇssɪɴɢ.....**"
+                            lel.edit(
+                                f"**ᴘʀᴏᴄᴇssɪɴɢ.....**"
                             )
                         print(
                             f"[{url_suffix}] Downloaded {percentage} at a speed of {speed} | ETA: {eta} seconds"
@@ -519,8 +520,8 @@ async def play(_, message: Message):
                     if flex[str(bytesx)] == 3:
                         flex[str(bytesx)] += 1
                         if eta > 2:
-                            
-                            lel = pbot.send_animation(chid,loading_img, caption=  f"**ᴄᴏɴɴᴇᴄᴛɪɴɢ 🔄**"
+                            lel.edit(
+                                f"**ᴄᴏɴɴᴇᴄᴛɪɴɢ 🔄**"
                             )
                         print(
                             f"[{url_suffix}] Downloaded {percentage} at a speed of {speed} | ETA: {eta} seconds"
@@ -529,20 +530,20 @@ async def play(_, message: Message):
                     if flex[str(bytesx)] == 4:
                         flex[str(bytesx)] += 1
                         if eta > 2:
-                            
-                            lel = pbot.send_animation(chid,loading_img, caption=  f"**ᴘʀᴏᴄᴇssɪɴɢ.....**"
+                            lel.edit(
+                                f"**ᴘʀᴏᴄᴇssɪɴɢ.....**"
                             )
                         print(
                             f"[{url_suffix}] Downloaded {percentage} at a speed of {speed} | ETA: {eta} seconds"
                         )
-                lel.delete()
             if d["status"] == "finished":
                 try:
                     taken = d["_elapsed_str"]
                 except Exception as e:
                     taken = "00:00"
                 size = d["_total_bytes_str"]
-                lel = pbot.send_animation(chid,loading_img, caption=  f"**ᴅᴏᴡɴʟᴏᴀᴅ ғɪɴɪsʜ !!**\n\n**{title[:50]}...\n\n**ғɪʟᴇ sɪᴢᴇ : {size}**\n■■■■■■■■■■ `100%`\n**ᴛɪᴍᴇ : {taken} sec**\n\n<b> ғғᴍᴘᴇᴊ ʀᴜɴɴɪɴɢ....</b>"
+                lel.edit(
+                    f"**ᴅᴏᴡɴʟᴏᴀᴅ ғɪɴɪsʜ !!**\n\n**{title[:50]}...\n\n**ғɪʟᴇ sɪᴢᴇ : {size}**\n■■■■■■■■■■ `100%`\n**ᴛɪᴍᴇ : {taken} sec**\n\n<b> ғғᴍᴘᴇᴊ ʀᴜɴɴɪɴɢ....</b>"
                 )
                 print(f"[{url_suffix}] Downloaded| Elapsed: {taken} seconds")
 
