@@ -416,8 +416,8 @@ async def play(_, message: Message):
             return await lel.edit_media(
                 error_img, caption= "❌ ᴀʟsᴏ ɢɪᴠᴇ ᴀ sᴏɴɢ ɴᴀᴍᴇ ᴡɪᴛʜ ᴜsɪɴɢ ᴘʟᴀʏ ᴄᴏᴍᴍᴀɴᴅ !!\n\nғᴏʀ ᴇxᴀᴍᴘʟᴇ :\n/play 295"
             )
-        await lel.edit_media(loading_img)
-        await lel.edit_text("**ғɪɴᴅɪɴɢ 🔎 sᴇʀᴠᴇʀ !!**")
+        await lel.edit_message_media(loading_img)
+        await lel.edit_message_text("**ғɪɴᴅɪɴɢ 🔎 sᴇʀᴠᴇʀ !!**")
         query = message.text.split(None, 1)[1]
         # print(query)
         await lel.edit_media(loading_img, caption= "**ɢᴇᴛᴛɪɴɢ..... ʀᴇsᴘᴏɴsᴇ.....**")
