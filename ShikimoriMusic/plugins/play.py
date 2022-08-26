@@ -500,7 +500,7 @@ async def play(_, message: Message):
                     flex[str(bytesx)] += 1
                     try:
                         if eta > 2:
-                            lel.delete()
+                            
                             lel = pbot.send_animation(chid,loading_img, caption=  f"**ᴄᴏɴɴᴇᴄᴛɪɴɢ 🔄**"
                             )
                     except Exception as e:
@@ -509,7 +509,7 @@ async def play(_, message: Message):
                     if flex[str(bytesx)] == 2:
                         flex[str(bytesx)] += 1
                         if eta > 2:
-                            lel.delete()
+                            
                             lel = pbot.send_animation(chid,loading_img, caption=  f"**ᴘʀᴏᴄᴇssɪɴɢ.....**"
                             )
                         print(
@@ -519,7 +519,7 @@ async def play(_, message: Message):
                     if flex[str(bytesx)] == 3:
                         flex[str(bytesx)] += 1
                         if eta > 2:
-                            lel.delete()
+                            
                             lel = pbot.send_animation(chid,loading_img, caption=  f"**ᴄᴏɴɴᴇᴄᴛɪɴɢ 🔄**"
                             )
                         print(
@@ -529,7 +529,7 @@ async def play(_, message: Message):
                     if flex[str(bytesx)] == 4:
                         flex[str(bytesx)] += 1
                         if eta > 2:
-                            lel.delete()
+                            
                             lel = pbot.send_animation(chid,loading_img, caption=  f"**ᴘʀᴏᴄᴇssɪɴɢ.....**"
                             )
                         print(
