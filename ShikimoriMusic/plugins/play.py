@@ -198,22 +198,25 @@ async def play(_, message: Message):
 
     c = await pbot.get_chat_member(message.chat.id, BOT_ID)
     if c.status != "administrator":
-        await lel.edit_media(error_img)
-        await lel.edit_text(f"**ᴘʀᴏᴍᴏᴛᴇ ᴍᴇ ᴀs ᴀ ᴀᴅᴍɪɴ !!**"
+        lel.delete()
+        lel = await pbot.send_animation(chid,error_img, cation = f"**ᴘʀᴏᴍᴏᴛᴇ ᴍᴇ ᴀs ᴀ ᴀᴅᴍɪɴ !!**"
         )
         return
     if not c.can_manage_voice_chats:
-        await lel.edit_media(
+        lel.delete()
+        lel = await pbot.send_animation(chid,
             error_img, caption="**ᴍᴀɴᴀɢᴇ-ᴠᴏɪᴄᴇ-ᴄʜᴀᴛ : ᴘᴏᴡᴇʀ ❌**"
         )
         return
     if not c.can_delete_messages:
-        await lel.edit_media(
+        lel.delete()
+        lel = await pbot.send_animation(chid,
             error_img, caption="**ᴅᴇʟᴇᴛᴇ-ᴍᴇssᴀɢᴇ : ᴘᴏᴡᴇʀ ❌**"
         )
         return
     if not c.can_invite_users:
-        await lel.edit_media(
+        lel.delete()
+        lel = await pbot.send_animation(chid,
             error_img, caption="**ɪɴᴠɪᴛᴇ-ᴜsᴇʀs : ᴘᴏᴡᴇʀ ❌**"
         )
         return
@@ -342,8 +345,9 @@ async def play(_, message: Message):
             )
 
         if (dur / 60) > DURATION_LIMIT:
-            await lel.edit(
-                f"💡 Videos longer than {DURATION_LIMIT} minutes aren't allowed to play!"
+            lel.delete()
+            lel = await pbot.send_animation(chid,
+                error_img,caption =f"💡 Videos longer than {DURATION_LIMIT} minutes aren't allowed to play!"
             )
             return
         requested_by = message.from_user.first_name
@@ -366,7 +370,8 @@ async def play(_, message: Message):
                     flex[str(bytesx)] += 1
                     try:
                         if eta > 2:
-                            lel.edit_media(
+                            lel.delete()
+                            lel = pbot.send_animation(chid,
                                 loading_img, caption= f"ᴅᴏᴡɴʟᴏᴀᴅɪɴɢ {title[:50]}\n\n**ғɪʟᴇ sɪᴢᴇ :** {size}\n**ᴘʀᴏɢʀᴇss :** {percentage}\n**sᴘᴇᴇᴅ :** {speed}\n**ᴇᴛᴀ :** {eta} sec"
                             )
                     except Exception as e:
@@ -375,7 +380,8 @@ async def play(_, message: Message):
                     if flex[str(bytesx)] == 2:
                         flex[str(bytesx)] += 1
                         if eta > 2:
-                            lel.edit_media(loading_img, caption= f"**ᴅᴏᴡɴʟᴏᴀᴅɪɴɢ :** {title[:50]}..\n\n**ғɪʟᴇ sɪᴢᴇ :** {size}\n**ᴘʀᴏɢʀᴇss :** {percentage}\n**sᴘᴇᴇᴅ :** {speed}\n**ᴇᴛᴀ :** {eta} sec"
+                            lel.delete()
+                            lel = pbot.send_animation(chid,loading_img, caption= f"**ᴅᴏᴡɴʟᴏᴀᴅɪɴɢ :** {title[:50]}..\n\n**ғɪʟᴇ sɪᴢᴇ :** {size}\n**ᴘʀᴏɢʀᴇss :** {percentage}\n**sᴘᴇᴇᴅ :** {speed}\n**ᴇᴛᴀ :** {eta} sec"
                             )
                         print(
                             f"[{url_suffix}] Downloaded {percentage} at a speed of {speed} | ETA: {eta} seconds"
@@ -384,7 +390,8 @@ async def play(_, message: Message):
                     if flex[str(bytesx)] == 3:
                         flex[str(bytesx)] += 1
                         if eta > 2:
-                            lel.edit_media(loading_img, caption= f"**ᴅᴏᴡɴʟᴏᴀᴅɪɴɢ** {title[:50]}...\n\n**ғɪʟᴇ sɪᴢᴇ :** {size}\n**ᴘʀᴏɢʀᴇss :** {percentage}\n**sᴘᴇᴇᴅ :** {speed}\n**ᴇᴛᴀ :** {eta} sec"
+                            lel.delete()
+                            lel = pbot.send_animation(chid,loading_img, caption= f"**ᴅᴏᴡɴʟᴏᴀᴅɪɴɢ** {title[:50]}...\n\n**ғɪʟᴇ sɪᴢᴇ :** {size}\n**ᴘʀᴏɢʀᴇss :** {percentage}\n**sᴘᴇᴇᴅ :** {speed}\n**ᴇᴛᴀ :** {eta} sec"
                             )
                         print(
                             f"[{url_suffix}] Downloaded {percentage} at a speed of {speed} | ETA: {eta} seconds"
@@ -393,7 +400,8 @@ async def play(_, message: Message):
                     if flex[str(bytesx)] == 4:
                         flex[str(bytesx)] += 1
                         if eta > 2:
-                            lel.edit_media(loading_img, caption=  f"**ᴅᴏᴡɴʟᴏᴀᴅɪɴɢ :** {title[:50]}....\n\n**ғɪʟᴇ sɪᴢᴇ :** {size}\n**ᴘʀᴏɢʀᴇss :** {percentage}\n**sᴘᴇᴇᴅ :** {speed}\n**ᴇᴛᴀ :** {eta} sec"
+                            lel.delete()
+                            lel = pbot.send_animation(chid,loading_img, caption=  f"**ᴅᴏᴡɴʟᴏᴀᴅɪɴɢ :** {title[:50]}....\n\n**ғɪʟᴇ sɪᴢᴇ :** {size}\n**ᴘʀᴏɢʀᴇss :** {percentage}\n**sᴘᴇᴇᴅ :** {speed}\n**ᴇᴛᴀ :** {eta} sec"
                             )
                         print(
                             f"[{url_suffix}] Downloaded {percentage} at a speed of {speed} | ETA: {eta} seconds"
@@ -404,7 +412,8 @@ async def play(_, message: Message):
                 except Exception as e:
                     taken = "00:00"
                 size = d["_total_bytes_str"]
-                lel.edit_media(loading_img, caption=  f"**ᴅᴏᴡɴʟᴏᴀᴅɪɴɢ :** {title[:50]}.....\n\n**ғɪʟᴇ sɪᴢᴇ :** {size}\n**ᴛɪᴍᴇ :** {taken} sec\n\n**ᴄᴏɴᴠᴇʀᴛɪɴɢ ғɪʟᴇ : **[__FFmpeg processing__]"
+                lel.delete()
+                lel = pbot.send_animation(chid,loading_img, caption=  f"**ᴅᴏᴡɴʟᴏᴀᴅɪɴɢ :** {title[:50]}.....\n\n**ғɪʟᴇ sɪᴢᴇ :** {size}\n**ᴛɪᴍᴇ :** {taken} sec\n\n**ᴄᴏɴᴠᴇʀᴛɪɴɢ ғɪʟᴇ : **[__FFmpeg processing__]"
                 )
                 print(f"[{url_suffix}] Downloaded| Elapsed: {taken} seconds")
 
@@ -413,14 +422,16 @@ async def play(_, message: Message):
         file_path = await cconvert(x)
     else:
         if len(message.command) < 2:
-            return await lel.edit_media(
+            await lel.delete()
+            return await pbot.send_animation(chid,
                 error_img, caption= "❌ ᴀʟsᴏ ɢɪᴠᴇ ᴀ sᴏɴɢ ɴᴀᴍᴇ ᴡɪᴛʜ ᴜsɪɴɢ ᴘʟᴀʏ ᴄᴏᴍᴍᴀɴᴅ !!\n\nғᴏʀ ᴇxᴀᴍᴘʟᴇ :\n/play 295"
             )
-        await lel.edit_message_media(loading_img)
-        await lel.edit_message_text("**ғɪɴᴅɪɴɢ 🔎 sᴇʀᴠᴇʀ !!**")
+        await lel.delete()
+        lel = await pbot.send_animation(chid, loading_img, caption = "**ғɪɴᴅɪɴɢ 🔎 sᴇʀᴠᴇʀ !!**")
         query = message.text.split(None, 1)[1]
         # print(query)
-        await lel.edit_media(loading_img, caption= "**ɢᴇᴛᴛɪɴɢ..... ʀᴇsᴘᴏɴsᴇ.....**")
+        await lel.delete()
+        lel = await pbot.send_animation(chid,loading_img, caption= "**ɢᴇᴛᴛɪɴɢ..... ʀᴇsᴘᴏɴsᴇ.....**")
         try:
             results = YoutubeSearch(query, max_results=5).to_dict()
             url = f"https://youtube.com{results[0]['url_suffix']}"
@@ -442,7 +453,8 @@ async def play(_, message: Message):
                 secmul *= 60
 
         except Exception as e:
-            await lel.edit_media(
+            await lel.delete()
+            lel = await pbot.send_animation(chid,
                 error_img, caption= "• **Song not found**\n\nwrite name correctly."
             )
             print(str(e))
@@ -462,7 +474,8 @@ async def play(_, message: Message):
 )
 
         if (dur / 60) > DURATION_LIMIT:
-            await lel.edit(
+            await lel.delete()
+            lel = await pbot.send_animation(chid,
                 error_img, caption= f"💡 Videos longer than {DURATION_LIMIT} minutes aren't allowed to play!"
             )
             return
