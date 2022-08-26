@@ -426,10 +426,12 @@ async def play(_, message: Message):
             return await pbot.send_animation(chid,
                 error_img, caption= "❌ ᴀʟsᴏ ɢɪᴠᴇ ᴀ sᴏɴɢ ɴᴀᴍᴇ ᴡɪᴛʜ ᴜsɪɴɢ ᴘʟᴀʏ ᴄᴏᴍᴍᴀɴᴅ !!\n\nғᴏʀ ᴇxᴀᴍᴘʟᴇ :\n/play 295"
             )
+        await asyncio.sleep(2)
         await lel.delete()
         lel = await pbot.send_animation(chid, loading_img, caption = "**ғɪɴᴅɪɴɢ 🔎 sᴇʀᴠᴇʀ !!**")
         query = message.text.split(None, 1)[1]
         # print(query)
+        await asyncio.sleep(2)
         await lel.delete()
         lel = await pbot.send_animation(chid,loading_img, caption= "**ɢᴇᴛᴛɪɴɢ..... ʀᴇsᴘᴏɴsᴇ.....**")
         try:
@@ -453,6 +455,7 @@ async def play(_, message: Message):
                 secmul *= 60
 
         except Exception as e:
+            await asyncio.sleep(2)
             await lel.delete()
             lel = await pbot.send_animation(chid,
                 error_img, caption= "• **Song not found**\n\nwrite name correctly."
@@ -474,6 +477,7 @@ async def play(_, message: Message):
 )
 
         if (dur / 60) > DURATION_LIMIT:
+            await asyncio.sleep(2)
             await lel.delete()
             lel = await pbot.send_animation(chid,
                 error_img, caption= f"💡 Videos longer than {DURATION_LIMIT} minutes aren't allowed to play!"
@@ -482,7 +486,7 @@ async def play(_, message: Message):
         requested_by = message.from_user.first_name
         await generate_cover(requested_by, title, views, duration, thumbnail)
         await lel.delete()
-        lel = await message.reply_text("hm")
+        lel = await message.reply_text("Here You Goo.....")
 
         def my_hook(d):
             if d["status"] == "downloading":
@@ -553,6 +557,7 @@ async def play(_, message: Message):
 
     if is_active_chat(message.chat.id):
         position = await queues.put(message.chat.id, file=file_path)
+        await asyncio.sleep(2)
         await pbot.send_photo(
             chid,
             photo="final.png",
@@ -580,6 +585,7 @@ async def play(_, message: Message):
 
         music_on(message.chat.id)
         add_active_chat(message.chat.id)
+        await asyncio.sleep(2)
         await pbot.send_photo(
             chid,
             photo="final.png",
