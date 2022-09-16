@@ -270,13 +270,13 @@ async def play(_, message: Message):
     if audio:
         if round(audio.duration / 60) > DURATION_LIMIT:
             raise DurationLimitError(
-                f"💡 Videos longer than {DURATION_LIMIT} minutes aren't allowed to play!"
+                f"💡 Audio longer than {DURATION_LIMIT} minutes aren't allowed to play!"
             )
 
         file_name = get_file_name(audio)
         url = f"https://t.me/{UPDATE}"
         title = audio.title
-        thumb_name = "https://telegra.ph/file/c83049a0b19b9a1e28b1c.jpg"
+        thumb_name = "https://i.imgur.com/W6AuXQ9.jpg"
         thumbnail = thumb_name
         duration = round(audio.duration / 60)
         views = "Locally added"
@@ -337,7 +337,7 @@ async def play(_, message: Message):
 
         except Exception as e:
             title = "NaN"
-            thumb_name = "https://telegra.ph/file/c83049a0b19b9a1e28b1c.jpg"
+            thumb_name = "https://i.imgur.com/W6AuXQ9.jpg"
             duration = "NaN"
             views = "NaN"
             keyboard = InlineKeyboardMarkup(
