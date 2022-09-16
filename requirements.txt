@@ -1,4 +1,3 @@
-os-sys
 aiohttp
 aiofiles
 asyncio
@@ -26,4 +25,3 @@ youtube-search
 yt-dlp
 regex
 html5lib
-git+https://github.com/jonathanong/heroku-buildpack-ffmpeg-latest.git
