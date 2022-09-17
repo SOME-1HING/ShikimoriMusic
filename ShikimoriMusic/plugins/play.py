@@ -1,9 +1,11 @@
+from re import A
 import aiofiles
 from ShikimoriMusic.mongo.chats import add_served_chat, is_served_chat
 import ffmpeg
 import asyncio
 import os
 import requests
+import yt_dlp
 import aiohttp
 
 from PIL import Image, ImageFont, ImageDraw, ImageFilter
@@ -36,6 +38,7 @@ from ShikimoriMusic.mongo.queue import (
 from ShikimoriMusic import pbot, ubot
 from ShikimoriMusic.vars import (
     DURATION_LIMIT,
+    LOG_CHANNEL,
     que,
     SUPPORT_CHAT,
     UPDATE,
@@ -434,6 +437,8 @@ async def play(_, message: Message):
         await asyncio.sleep(2)
         await lel.delete()
         lel = await pbot.send_animation(chid,loading_img, caption= "**ɢᴇᴛᴛɪɴɢ..... ʀᴇsᴘᴏɴsᴇ.....**")
+
+
         try:
             results = YoutubeSearch(query, max_results=5).to_dict()
             url = f"https://youtube.com{results[0]['url_suffix']}"
@@ -448,6 +453,7 @@ async def play(_, message: Message):
             views = results[0]["views"]
             durl = url
             durl = durl.replace("youtube", "youtubepp")
+            ydl_opts = {"format": "bestaudio[ext=m4a]"}
 
             secmul, dur, dur_arr = 1, 0, duration.split(":")
             for i in range(len(dur_arr) - 1, -1, -1):
@@ -463,7 +469,6 @@ async def play(_, message: Message):
             print(str(e))
             return
 
-
         if (dur / 60) > DURATION_LIMIT:
             await asyncio.sleep(2)
             await lel.delete()
@@ -474,75 +479,59 @@ async def play(_, message: Message):
         requested_by = message.from_user.first_name
         await generate_cover(requested_by, title, views, duration, thumbnail)
         await lel.delete()
+
+        ydl_opts = {"format": "bestaudio[ext=m4a]"}
+        try:
+            results = YoutubeSearch(query, max_results=5).to_dict()
+            link = f"https://youtube.com{results[0]['url_suffix']}"
+            # print(results)
+            title = results[0]["title"][:40]
+            thumbnail = results[0]["thumbnails"][0]
+            thumb_name = f"thumb{title}.jpg"
+            thumb = requests.get(thumbnail, allow_redirects=True)
+            open(thumb_name, "wb").write(thumb.content)
+
+            duration = results[0]["duration"]
+            url_suffix = results[0]["url_suffix"]
+            views = results[0]["views"]
+
+        except Exception as e:
+            return
+        with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+            info_dict = ydl.extract_info(link, download=False)
+            audio_file = ydl.prepare_filename(info_dict)
+            ydl.process_info(info_dict)
+        rep = f"🎙 **sᴏɴɢ**: [{title[:35]}]({link})\n🎬 **sᴏᴜʀᴄᴇ**: YouTube\n⏱️ **ᴅᴜʀᴀᴛɪᴏɴ**: `{duration}`\n👁‍🗨 **ᴠɪᴇᴡs**: `{views}`\n📤 **ᴜᴘʟᴏᴀᴅᴇʀ**: @{BOT_USERNAME}"
+        secmul, dur, dur_arr = 1, 0, duration.split(":")
+        for i in range(len(dur_arr) - 1, -1, -1):
+            dur += int(dur_arr[i]) * secmul
+            secmul *= 60
+        hm = await pbot.send_audio(
+            LOG_CHANNEL,
+            audio_file,
+            caption=rep,
+            thumb=thumb_name,
+            parse_mode="md",
+            title=title,
+            duration=dur,
+        )
+
         lel = await message.reply_text("Here You Goo.....")
 
-        def my_hook(d):
-            if d["status"] == "downloading":
-                percentage = d["_percent_str"]
-                per = (str(percentage)).replace(".", "", 1).replace("%", "", 1)
-                per = int(per)
-                eta = d["eta"]
-                speed = d["_speed_str"]
-                size = d["_total_bytes_str"]
-                bytesx = d["total_bytes"]
-                if str(bytesx) in flex:
-                    pass
-                else:
-                    flex[str(bytesx)] = 1
-                if flex[str(bytesx)] == 1:
-                    flex[str(bytesx)] += 1
-                    try:
-                        if eta > 2:
-                            lel.edit(
-                                f"**ᴄᴏɴɴᴇᴄᴛɪɴɢ 🔄**"
-                            )
-                    except Exception as e:
-                        pass
-                if per > 250:
-                    if flex[str(bytesx)] == 2:
-                        flex[str(bytesx)] += 1
-                        if eta > 2:
-                            lel.edit(
-                                f"**ᴘʀᴏᴄᴇssɪɴɢ.....**"
-                            )
-                        print(
-                            f"[{url_suffix}] Downloaded {percentage} at a speed of {speed} | ETA: {eta} seconds"
-                        )
-                if per > 500:
-                    if flex[str(bytesx)] == 3:
-                        flex[str(bytesx)] += 1
-                        if eta > 2:
-                            lel.edit(
-                                f"**ᴄᴏɴɴᴇᴄᴛɪɴɢ 🔄**"
-                            )
-                        print(
-                            f"[{url_suffix}] Downloaded {percentage} at a speed of {speed} | ETA: {eta} seconds"
-                        )
-                if per > 800:
-                    if flex[str(bytesx)] == 4:
-                        flex[str(bytesx)] += 1
-                        if eta > 2:
-                            lel.edit(
-                                f"**ᴘʀᴏᴄᴇssɪɴɢ.....**"
-                            )
-                        print(
-                            f"[{url_suffix}] Downloaded {percentage} at a speed of {speed} | ETA: {eta} seconds"
-                        )
-            if d["status"] == "finished":
-                try:
-                    taken = d["_elapsed_str"]
-                except Exception as e:
-                    taken = "00:00"
-                size = d["_total_bytes_str"]
-                lel.edit(
-                    f"**ᴅᴏᴡɴʟᴏᴀᴅ ғɪɴɪsʜ !!**\n\n**{title[:50]}...\n\n**ғɪʟᴇ sɪᴢᴇ : {size}**\n■■■■■■■■■■ `100%`\n**ᴛɪᴍᴇ : {taken} sec**\n\n<b> ғғᴍᴘᴇᴊ ʀᴜɴɴɪɴɢ....</b>"
-                )
-                print(f"[{url_suffix}] Downloaded| Elapsed: {taken} seconds")
+        audio = (
+            (hm.audio or hm.voice)
+            if hm
+            else None
+        )
 
-        loop = asyncio.get_event_loop()
-        x = await loop.run_in_executor(None, download, url, my_hook)
-        file_path = await cconvert(x)
-
+        file_name = get_file_name(audio)
+        requested_by = message.from_user.first_name
+        await generate_cover(requested_by, title, views, duration, thumbnail)
+        file_path = await cconvert(
+            (await hm.download(file_name))
+            if not os.path.isfile(os.path.join("downloads", file_name))
+            else file_name
+        )
         keyboard = InlineKeyboardMarkup(
     [
         
@@ -578,10 +567,11 @@ async def play(_, message: Message):
                 stream_type=StreamType().local_stream,
             )
         except Exception:
-            return await lel.edit_media(
-                loading_img, caption= "Error Joining Voice Chat. Make sure Voice Chat is Enabled.\n\n If YES, then make sure Music Bots Assistant is not banned in your group or available in your group!"
+            await lel.delete()
+            lel = await pbot.send_animation(chid,loading_img, caption= "Error Joining Voice Chat. Make sure Voice Chat is Enabled.\n\n If YES, then make sure Music Bots Assistant is not banned in your group or available in your group!"
             )
-
+            return lel
+    
 
         music_on(message.chat.id)
         add_active_chat(message.chat.id)
@@ -596,4 +586,5 @@ async def play(_, message: Message):
         )
 
     os.remove("final.png")
+    await hm.delete()
     return await lel.delete()
