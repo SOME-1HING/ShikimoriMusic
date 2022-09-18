@@ -202,7 +202,7 @@ async def play(_, message: Message):
     c = await pbot.get_chat_member(message.chat.id, BOT_ID)
     if c.status != "administrator":
         lel.delete()
-        lel = await pbot.send_animation(chid,error_img, cation = f"**ᴘʀᴏᴍᴏᴛᴇ ᴍᴇ ᴀs ᴀ ᴀᴅᴍɪɴ !!**"
+        lel = await pbot.send_animation(chid,error_img, caption = f"**ᴘʀᴏᴍᴏᴛᴇ ᴍᴇ ᴀs ᴀ ᴀᴅᴍɪɴ !!**"
         )
         return
     if not c.can_manage_voice_chats:
