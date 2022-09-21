@@ -11,46 +11,46 @@
     "env": {
         "SESSION_NAME": {
             "description": "fill with the pyrogram session string of your assistant account",
-            "required": true
+            "required": false
         },
         "OWNER_ID": {
             "description": "fill with your telegram id as the owner of the bot",
-            "required": true,
+            "required": false,
             "value": "5058236569"
         },
         "OWNER_USERNAME": {
             "description": "fill with the bot owner username without @",
-            "required": true,
+            "required": false,
             "value": "Its_romeoo"
         },
         "ASSID": {
             "description": "fill with telegram id of your assistant account",
-            "required": true,
+            "required": false,
             "value": ""
         },
         "ASSNAME": {
             "description": "fill with telegram name of your assistant account",
-            "required": true,
+            "required": false,
             "value": ""
         },
         "ASSUSERNAME": {
             "description": "fill with telegram username of your assistant account without @",
-            "required": true,
+            "required": false,
             "value": ""
         },
         "BOT_ID": {
             "description": "fill with telegram id of your bot",
-            "required": true,
+            "required": false,
             "value": ""
         },
         "BOT_USERNAME": {
             "description": "fill with telegram username of bot without @",
-            "required": true,
+            "required": false,
             "value": ""
         },
         "BOT_NAME": {
             "description": "fill with telegram name of bot",
-            "required": true,
+            "required": false,
             "value": ""
         },
         "SUPPORT": {
@@ -65,22 +65,22 @@
         },
         "API_ID": {
             "description": "your Api ID from my.telegram.org/apps",
-            "required": true,
+            "required": false,
             "value": ""
         },
         "API_HASH": {
             "description": "your Api Hash from my.telegram.org/apps",
-            "required": true,
+            "required": false,
             "value": ""
         },
         "BOT_TOKEN": {
             "description": "fill with your bot token get from @BotFather on telegram",
-            "required": true,
+            "required": false,
             "value": ""
         },
         "MONGO_DB_URI": {
             "description": "fill with the mongodb url get from mongodb.com (don't use mine below !)",
-            "required": true,
+            "required": false,
             "value": ""
         }
     },

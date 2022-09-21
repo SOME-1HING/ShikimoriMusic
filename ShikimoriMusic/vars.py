@@ -1,20 +1,17 @@
+
 import os
 
 que = {}
 admins = {}
 
-BG_IMG = os.environ.get("BG_IMG", "https://telegra.ph/file/f2a2d31f60a9e0f3dbe94.png")
-START_PIC = os.environ.get("START_PIC", "https://telegra.ph/file/f2a2d31f60a9e0f3dbe94.png")
-OWNER_USERNAME = os.environ.get("OWNER_USERNAME")
-IMG_1 = os.environ.get("IMG_1", "https://telegra.ph/file/3b663a7e9a414304c084f.jpg")
-IMG_2 = os.environ.get("IMG_2", "https://telegra.ph/file/6213d2673486beca02967.png")
-IMG_3 = os.environ.get("IMG_3", "https://telegra.ph/file/f02efde766160d3ff52d6.png")
-IMG_4 = os.environ.get("IMG_4", "https://telegra.ph/file/be5f551acb116292d15ec.png")
+BG_IMG = os.environ.get("BG_IMG", "https://i.imgur.com/W3Jyec6.jpg")
+START_PIC = BG_IMG
+OWNER_USERNAME = os.environ.get("OWNER_USERNAME", None)
 
 SESSION_STRING = os.environ.get("SESSION_STRING", None)
 BOT_TOKEN = os.environ.get("BOT_TOKEN", None)
 API_ID = int(os.environ.get("API_ID", None))
-API_HASH = os.environ.get("API_HASH",None)
+API_HASH = os.environ.get("API_HASH", None)
 OWNER_ID = int(os.environ.get("OWNER_ID", None))
 SUPPORT_CHAT = os.environ.get("SUPPORT_CHAT", None)
 UPDATE = os.environ.get("UPDATE", None)
